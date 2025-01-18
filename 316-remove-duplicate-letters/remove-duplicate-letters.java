@@ -101,21 +101,15 @@ class Solution{
         {
             char curr = str.charAt(i);
 
-            if(hs.contains(curr))
+            if(!hs.contains(curr))
             {
-                continue;
-            }
-
-            while(!st.isEmpty() && curr < st.peek() && hm.get(st.peek()) > i)
-            {
-                hs.remove(st.pop());
-            }
-            
-            // if(!hs.contains(curr))
-            // {
+                while(!st.isEmpty() && curr < st.peek() && hm.get(st.peek()) > i)
+                {
+                    hs.remove(st.pop());
+                }
                 st.push(curr);
                 hs.add(curr);
-            // }
+            }
            
         }
 
