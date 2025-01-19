@@ -1,3 +1,45 @@
+class Solution
+{
+    public int[] pivotArray(int[] nums, int pivot)
+    {
+        int ans[] = new int [nums.length];
+        int j=0;
+        int n=nums.length;
+
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i] < pivot)
+            {
+                ans[j] = nums[i];
+                j++;
+            }
+        }
+
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i] == pivot)
+            {
+                ans[j] = nums[i];
+                j++;
+            }
+        }
+
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i] > pivot)
+            {
+                ans[j] = nums[i];
+                j++;
+            }
+        }
+
+        return ans;
+    }
+
+}
+
+
+
 // class Solution {
 
 //     public static int findIndex(int[] nums, int pivot)
@@ -79,38 +121,4 @@
 // }
 
 
-class Solution {
-    public int[] pivotArray(int[] nums, int pivot) {
-        // Lists to collect elements
-        List<Integer> less = new ArrayList<>();
-        List<Integer> equal = new ArrayList<>();
-        List<Integer> greater = new ArrayList<>();
 
-        // Classify elements in one pass
-        for (int num : nums) {
-            if (num < pivot) {
-                less.add(num);
-            } else if (num == pivot) {
-                equal.add(num);
-            } else {
-                greater.add(num);
-            }
-        }
-
-        // Merge the three lists
-        int[] result = new int[nums.length];
-        int index = 0;
-
-        for (int num : less) {
-            result[index++] = num;
-        }
-        for (int num : equal) {
-            result[index++] = num;
-        }
-        for (int num : greater) {
-            result[index++] = num;
-        }
-
-        return result;
-    }
-}
