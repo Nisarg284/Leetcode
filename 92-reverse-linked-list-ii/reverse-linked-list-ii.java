@@ -41,10 +41,10 @@ class Solution {
         ListNode next;
 
 
-        idx = 0;
+        // idx = 0;
 
         // travrse unitl idx != right+1 Or curr!=null
-        while(idx < right-left+1 && curr!=null)
+        while(idx < right+1 && curr!=null)
         {
             next = curr.next;
             curr.next = prev;
