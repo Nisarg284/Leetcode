@@ -10,49 +10,74 @@
  */
 class Solution {
 
+
+    public static boolean isValid(ListNode head,ListNode[] ref)
+    {
+        if(head == null)
+        {
+            return true;
+        }
+
+        boolean flag = isValid (head.next,ref);
+
+        if(!flag || head.val != ref[0].val)
+        {
+            return false;
+        }
+        ref[0] = ref[0].next;
+        return true;
+    }
+
     
     public boolean isPalindrome(ListNode head) {
 
+        ListNode[] ref = new ListNode[1];
+        ref[0] = head;
 
-        ListNode slow = head;
-        ListNode fast = head;
+        return isValid(head,ref);
 
-        while(fast!=null && fast.next!=null)
-        {
-            slow =slow.next;
-            fast = fast.next.next;
-        }
 
-        ListNode newLL = slow;
+        // ListNode slow = head;
+        // ListNode fast = head;
 
-        ListNode prev = null;
-        ListNode curr = newLL;
-        ListNode next;
+        // while(fast!=null && fast.next!=null)
+        // {
+        //     slow =slow.next;
+        //     fast = fast.next.next;
+        // }
 
-        while(curr!=null)
-        {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
+        // ListNode newLL = slow;
 
-        slow.next = prev;
+        // ListNode prev = null;
+        // ListNode curr = newLL;
+        // ListNode next;
 
-        ListNode h1 = head;
-        ListNode h2 = prev;
+        // while(curr!=null)
+        // {
+        //     next = curr.next;
+        //     curr.next = prev;
+        //     prev = curr;
+        //     curr = next;
+        // }
 
-        while(h1!=slow)
-        {
-            if(h1.val!=h2.val)
-            {
-                return false;
-            }
-            h1=h1.next;
-            h2 = h2.next;
-        }
+        // slow.next = prev;
 
-        return true;
+        // ListNode h1 = head;
+        // ListNode h2 = prev;
+
+        // while(h1!=slow)
+        // {
+        //     if(h1.val!=h2.val)
+        //     {
+        //         return false;
+        //     }
+        //     h1=h1.next;
+        //     h2 = h2.next;
+        // }
+
+        // return true;
+
+// <--------------------------------------------------->
 
         // ListNode slow=head;
         // ListNode fast=head;
