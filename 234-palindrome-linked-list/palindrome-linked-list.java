@@ -26,7 +26,7 @@ class Solution {
         ListNode newLL = slow;
 
         ListNode prev = null;
-        ListNode curr = slow;
+        ListNode curr = newLL;
         ListNode next;
 
         while(curr!=null)
