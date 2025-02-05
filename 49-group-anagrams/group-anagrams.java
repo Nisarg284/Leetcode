@@ -1,66 +1,47 @@
 class Solution {
-    public static String alphaSorting(String str)
-    {
-        ArrayList<Character> strList = new ArrayList<>();
+    public static String alphaSorting(String str) {
+        ArrayList<Character> al = new ArrayList<>();
 
-        // inserting str characters into list
         for(int i=0;i<str.length();i++)
         {
-            char curr = str.charAt(i);
-            strList.add(curr);
+            al.add(str.charAt(i));
         }
 
-        // sort list using collections.sort
-        Collections.sort(strList);
+        Collections.sort(al);
+        StringBuffer sb = new StringBuffer();
 
-        StringBuilder sb = new StringBuilder();
-
-        // insert sorted characters in sb 
-        for(int i=0;i<strList.size();i++)
+        for(int i=0;i<al.size();i++)
         {
-            char curr = strList.get(i);
-            sb.append(curr);
+            sb.append(al.get(i));
         }
         return sb.toString();
     }
-    public List<List<String>> groupAnagrams(String[] strs) {
-        
-        List<List<String>> list = new ArrayList<>();
 
-        int n = strs.length;
+    public static List<List<String>> groupAnagrams(String[] strs) {
 
-        // create HashMap
-        HashMap<String,List<String>> hm = new HashMap<>();
+        // Define hashMap of String:List
+        HashMap<String, List<String>> hm = new HashMap<>();
 
-        for(int i=0;i<n;i++)
-        {
-            String sorted = alphaSorting(strs[i]);
-            String unSorted = strs[i];
+        List<List<String>> ans = new ArrayList<>();
 
-           // List<String> l1 = new ArrayList<>();
+        for (String s : strs) {
+            String sorted = alphaSorting(s);
 
             if(!hm.containsKey(sorted))
             {
-                List<String> st4 = new ArrayList<>();
-                st4.add(unSorted);
-                hm.put(sorted,st4);
-            }else
-            {
-                List<String> st4 = hm.get(sorted);
-                st4.add(unSorted);
-                hm.put(sorted,hm.getOrDefault(sorted,st4));
+                List<String> l = new ArrayList<>();
+                l.add(s);
+                hm.put(sorted, l);
+            }else{
+                hm.get(sorted).add(s);
             }
-
         }
 
-
-        for(String st : hm.keySet())
+        // now iterate in HashMap & store every List in List array
+        for(String s : hm.keySet())
         {
-            List<String> st2 = hm.get(st);
-
-            list.add(st2);
+            ans.add(hm.get(s));
         }
-
-        return list;
+        return ans;
     }
 }
