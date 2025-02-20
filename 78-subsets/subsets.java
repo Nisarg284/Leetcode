@@ -7,7 +7,6 @@ class Solution {
         ans.add(nums[i]);
         helper(nums, i + 1, ans, finalAns);
         ans.remove(ans.size()-1);
-        
         helper(nums, i + 1, ans, finalAns);
 
     }
