@@ -45,14 +45,13 @@ class Solution {
             if (curr.val == 0 && sumNode != curr) {  // End of segment
                 sumNode.next = curr.next;            // Skip to next segment
                 sumNode = curr.next;                 // Move to next sum node
-                curr = curr.next;
             } else {                                // Add to sum
                 if(sumNode!=curr)
                 {
                     sumNode.val += curr.val;
                 }
-                curr = curr.next;
             }
+            curr = curr.next;
         }
         
         return head.next;
