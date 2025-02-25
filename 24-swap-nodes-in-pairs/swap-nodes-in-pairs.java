@@ -45,34 +45,13 @@ class Solution {
         while (curr!= null &&curr.next != null) {
              ListNode next = curr.next;
 
-        // Swapping nodes
         curr.next = next.next;
         next.next = curr;
         prev.next = next;
-
-        // Moving to the next pair
+        
         prev = curr;
         curr = curr.next;
-
-            // ListNode curr = prev.next; 
-            // ListNode next = curr.next; 
-
-            // // Perform the swap
-            // curr.next = next.next; 
-            // next.next = curr; 
-            // prev.next = next; 
-
-            // prev = curr;
-            // next = curr.next;
-
-            // if(next.next!= null)
-            // {
-            // curr.next = next.next;
-            // next.next = curr;
-            // prev.next = next;
-            // }
-            // prev = curr;
-            // curr = curr.next;
+        
         }
 
         return dummy.next;
