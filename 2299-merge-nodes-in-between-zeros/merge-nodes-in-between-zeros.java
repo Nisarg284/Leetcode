@@ -47,14 +47,11 @@ class Solution {
                 sumNode = curr.next;                 // Move to next sum node
                 curr = curr.next;
             } else {                                // Add to sum
-                if(sumNode == curr)
+                if(sumNode!=curr)
                 {
-                    curr = curr.next;
-                }else{
                     sumNode.val += curr.val;
-                    curr = curr.next;
                 }
-                
+                curr = curr.next;
             }
         }
         
