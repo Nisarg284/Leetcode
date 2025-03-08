@@ -15,14 +15,17 @@ class Solution {
         int i=1;
         int j=k;
 
-        char[] blockArray = blocks.toCharArray();
+        // char[] blockArray = blocks.toCharArray();
 
-        while(j<blockArray.length)
+        while(j<blocks.length())
         {
-            if(blockArray[j] == 'B' && blockArray[i-1] != 'B')
+            // char c1 = blocks.charAt(i);
+            char c2 = blocks.charAt(j);
+            char c3 = blocks.charAt(i-1);
+            if(c2 == 'B' && c3 != 'B')
             {
                 black++;
-            }else if (blockArray[i-1] == 'B' && blockArray[j] == 'W')
+            }else if (c3 == 'B' && c2 == 'W')
             {
                 black--;
             }
