@@ -13,32 +13,21 @@ class Solution {
         while(j<n)
         {
             hm.put(fruits[j],hm.getOrDefault(fruits[j],0)+1);
-
             while(hm.size() > k)
             {
-                int right = fruits[i];
+                int left = fruits[i];
 
-                if(hm.get(right) == 1)
+                if(hm.get(left) == 1)
                 {
-                    hm.remove(right);
+                    hm.remove(left);
                 }else{
-                    hm.put(right,hm.get(right)-1);
+                    hm.put(left,hm.get(left)-1);
                 }
                 i++;
             }
             ans = Math.max(ans,j-i+1);
             j++;
         }
-
-
-        // int ans = 0;
-        // for(int a:hm.keySet())
-        // {
-        //     ans+=hm.get(a);
-        // }
-
         return ans;
-
-        
     }
 }
