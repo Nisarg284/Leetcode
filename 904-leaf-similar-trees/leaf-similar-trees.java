@@ -26,6 +26,7 @@ class Solution {
         if(root.left == null && root.right == null)
         {
             li.add(root.val);
+            return;
         }
 
         filling(root.left,li);
