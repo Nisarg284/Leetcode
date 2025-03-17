@@ -22,15 +22,15 @@ class Solution {
         {
             return;
         }
+        sub.add(root.val);
 
         if(root.left == null && root.right == null && root.val == targetSum)
         {
-            sub.add(root.val);
             ans.add(new ArrayList<>(sub));
             sub.removeLast();
             return;
         }
-        sub.add(root.val);
+        // sub.add(root.val);
 
         helper(root.left,targetSum - root.val,ans,sub);
         helper(root.right,targetSum - root.val,ans,sub);
