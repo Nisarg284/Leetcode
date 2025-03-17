@@ -1,33 +1,56 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
 
-    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        List<List<Integer>> result = new ArrayList<>();
-        List<Integer> currentPath = new ArrayList<>();
-        dfs(root, targetSum, currentPath, result);
-        return result;
+
+    public static void helper(TreeNode root,int targetSum,List<List<Integer>> ans,List<Integer> sub)
+    {
+        if(root == null)
+        {
+            return;
+        }
+
+        if(root.left == null && root.right == null && root.val == targetSum)
+        {
+            sub.add(root.val);
+            ans.add(new ArrayList<>(sub));
+            sub.removeLast();
+            return;
+        }
+        sub.add(root.val);
+
+        helper(root.left,targetSum - root.val,ans,sub);
+        helper(root.right,targetSum - root.val,ans,sub);
+
+        sub.removeLast();
     }
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
 
-
-     public static void dfs(TreeNode node, int targetSum, List<Integer> currentPath, List<List<Integer>> result) {
-        if (node == null) {
-            return; // Base case: empty tree or reached a null node
+        if(root == null)
+        {
+            return new ArrayList<>();
         }
 
-        // Add the current node's value to the path
-        currentPath.add(node.val);
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> sub = new ArrayList<>();
 
-        // Check if the current node is a leaf node and if the path sum equals the target sum
-        if (node.left == null && node.right == null && node.val == targetSum) {
-            result.add(new ArrayList<>(currentPath)); // Add a copy of the current path to the result
-        }
+        helper(root,targetSum,ans,sub);
+        // ans.add(sub);
 
-        // Recursively traverse the left and right subtrees
-        dfs(node.left, targetSum - node.val, currentPath, result);
-        dfs(node.right, targetSum - node.val, currentPath, result);
-
-        // Backtrack: remove the current node's value from the path
-        currentPath.removeLast();
+        return ans;
+        
     }
 }
-
-
