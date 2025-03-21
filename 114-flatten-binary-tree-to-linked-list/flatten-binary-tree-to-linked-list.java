@@ -1,42 +1,46 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
  * }
  */
 class Solution {
+    public void flatten(TreeNode root) {
 
-    public static void preorder(TreeNode root,ArrayList<TreeNode> nodes)
-    {
-        if(root == null)
-        {
+        if (root == null) {
             return;
         }
 
-        nodes.add(root);
-        preorder(root.left,nodes);
-        preorder(root.right,nodes);
+        TreeNode curr = root;
 
-    }
-    public void flatten(TreeNode root) {
+        while (curr != null) {
+            if (curr.left != null) 
+            {
+                TreeNode pred = curr.left;
+                while (pred.right != null) 
+                {
+                    pred = pred.right;
+                }
 
-        ArrayList<TreeNode> nodes = new ArrayList<>();
-        preorder(root,nodes);
+                TreeNode temp = curr.right;
+                curr.right = curr.left;
 
-        for(int i =0;i<nodes.size()-1;i++)
-        {
-            nodes.get(i).left = null;
-            nodes.get(i).right = nodes.get(i+1);
+                pred.right = temp;
+                // curr.right = pred;
+                curr.left = null;
+
+            }
+            curr = curr.right;
         }
-        
+
     }
 }
