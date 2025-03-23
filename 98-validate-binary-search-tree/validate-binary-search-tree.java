@@ -15,32 +15,38 @@
  */
 class Solution {
 
-    static TreeNode prev;
-
-    public static boolean inOrderTraversal(TreeNode root)
+    public static void helper(TreeNode root,ArrayList<Integer>sorted)
     {
         if(root == null)
         {
-            return true;
+            return;
         }
 
-        if(!inOrderTraversal(root.left))
-        {
-            return false;
-        }
+        // if(root.left == null && root.right == null)
+        // {
+        //     sorted.add(root.val);
+        //     return;
+        // }
 
-        if(prev!=null && prev.val>=root.val)
-        {
-            return false;
-        }
-
-        prev = root;
-        return inOrderTraversal(root.right);
+        helper(root.left,sorted);
+        sorted.add(root.val);
+        helper(root.right,sorted);
 
     }
     public boolean isValidBST(TreeNode root) {
-        prev = null;
-        return inOrderTraversal(root);
+
+        ArrayList<Integer> sorted = new ArrayList<>();
+        helper(root,sorted);
+
+        for(int i=0;i<sorted.size()-1;i++)
+        {
+            if(sorted.get(i) >= sorted.get(i+1))
+            {
+                return false;
+            }
+        }
+
+        return true;
         
     }
 }
