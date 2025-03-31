@@ -24,15 +24,22 @@ class Solution {
 
         helper(root.left,prev,flag);
 
-        if(prev[0] == null)
-        {
+        // if(prev[0] == null)
+        // {
+        //     prev[0] = root;
+        // }else if(root.val <= prev[0].val)
+        // {
+        //     flag[0] = false;
+        // }else{
+        //     prev[0] = root;
+        // }
+
+         if(prev[0] != null && prev[0].val >= root.val)
+            {
+                flag[0] = false;
+            }
+
             prev[0] = root;
-        }else if(root.val <= prev[0].val)
-        {
-            flag[0] = false;
-        }else{
-            prev[0] = root;
-        }
 
         helper(root.right,prev,flag);
     }
