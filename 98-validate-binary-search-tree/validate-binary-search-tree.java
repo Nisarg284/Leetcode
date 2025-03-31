@@ -15,38 +15,38 @@
  */
 class Solution {
 
-    public static void helper(TreeNode root,ArrayList<Integer>sorted)
+    public static void helper(TreeNode root,TreeNode[] prev,boolean[] flag)
     {
         if(root == null)
         {
             return;
         }
 
-        // if(root.left == null && root.right == null)
-        // {
-        //     sorted.add(root.val);
-        //     return;
-        // }
+        helper(root.left,prev,flag);
 
-        helper(root.left,sorted);
-        sorted.add(root.val);
-        helper(root.right,sorted);
+        if(prev[0] == null)
+        {
+            prev[0] = root;
+        }else if(root.val <= prev[0].val)
+        {
+            flag[0] = false;
+        }else{
+            prev[0] = root;
+        }
 
+        helper(root.right,prev,flag);
     }
     public boolean isValidBST(TreeNode root) {
 
-        ArrayList<Integer> sorted = new ArrayList<>();
-        helper(root,sorted);
+        TreeNode[] prev = new TreeNode[1];
+        boolean[] flag = new boolean[1];
 
-        for(int i=0;i<sorted.size()-1;i++)
-        {
-            if(sorted.get(i) >= sorted.get(i+1))
-            {
-                return false;
-            }
-        }
+        prev[0] = null;
+        flag[0] = true;
 
-        return true;
+        helper(root,prev,flag);
+
+        return flag[0];
         
     }
 }
