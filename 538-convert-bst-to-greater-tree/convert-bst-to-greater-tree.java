@@ -23,13 +23,15 @@ class Solution {
         }
 
         helper(root.right,sum);
+
         sum[0] += root.val;
+
         root.val = sum[0];
+
         helper(root.left,sum);
-
     }
+    
     public TreeNode convertBST(TreeNode root) {
-
         if(root == null)
         {
             return null;
