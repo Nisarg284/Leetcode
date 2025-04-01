@@ -15,28 +15,22 @@
  */
 class Solution {
 
-
-    public static void helper(TreeNode root,int[]ans,TreeNode[]prev)
+    public static void helper(TreeNode root,int[] ans,TreeNode[]prev)
     {
         if(root == null)
         {
             return;
         }
 
-        // if(ans[0] > diff)
-        // {
-        //     prev[0] = root;
-        //     ans[0] = diff;
-        // }
-
         helper(root.left,ans,prev);
 
-        if(prev[0] != null)
+        if(prev[0]!=null)
         {
             ans[0] = Math.min(ans[0],Math.abs(root.val - prev[0].val));
         }
 
         prev[0] = root;
+
         helper(root.right,ans,prev);
     }
     public int getMinimumDifference(TreeNode root) {
@@ -46,9 +40,10 @@ class Solution {
             return 0;
         }
 
-        int[]ans = new int[1];
+        int[] ans = new int[1];
         ans[0] = Integer.MAX_VALUE;
-        TreeNode[]prev = new TreeNode[1];
+
+        TreeNode[] prev = new TreeNode[1];
         prev[0] = null;
 
         helper(root,ans,prev);
