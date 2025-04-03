@@ -14,46 +14,51 @@
  * }
  */
 class Solution {
-
-    public static void helper(TreeNode root,TreeNode[] prev,boolean[] flag)
-    {
-        if(root == null)
-        {
-            return;
-        }
-
-        helper(root.left,prev,flag);
-
-        // if(prev[0] == null)
-        // {
-        //     prev[0] = root;
-        // }else if(root.val <= prev[0].val)
-        // {
-        //     flag[0] = false;
-        // }else{
-        //     prev[0] = root;
-        // }
-
-         if(prev[0] != null && prev[0].val >= root.val)
-            {
-                flag[0] = false;
-            }
-
-            prev[0] = root;
-
-        helper(root.right,prev,flag);
-    }
     public boolean isValidBST(TreeNode root) {
 
-        TreeNode[] prev = new TreeNode[1];
-        boolean[] flag = new boolean[1];
+        TreeNode curr = root;
+        TreeNode prev = null;
 
-        prev[0] = null;
-        flag[0] = true;
+        while(curr!= null)
+        {
+            if(curr.left!=null)
+            {
+                TreeNode pred = curr.left;
+                while(pred.right!= null && pred.right != curr)
+                {
+                    pred = pred.right;
+                }
 
-        helper(root,prev,flag);
+                if(pred.right == null )
+                {
+                    pred.right = curr;
+                    curr = curr.left;
+                }
 
-        return flag[0];
+                if(pred.right == curr)
+                {
+                    pred.right = null;
+
+                    if(prev != null && prev.val >= curr.val)
+                    {
+                        return false; 
+                    }
+
+                    prev = curr;
+                    curr = curr.right;
+                }
+            }else{
+                    if(prev != null && prev.val >= curr.val)
+                    {
+                        return false; 
+                    }
+
+                    prev = curr;
+                    curr = curr.right;
+            }
+        }
+
+        return true;
         
     }
 }
