@@ -7,7 +7,7 @@ class Solution {
         int j = 0;
         int n = fruits.length;
         int k = 2;
-        int ans = 0;
+        int ans = 1;
 
 
         while(j<n)
