@@ -71,7 +71,7 @@ class Solution {
             extraNodes--; 
 
             
-            for (int j = 1; j < partSize; j++) 
+            for (int j =1; j < partSize; j++) 
             {
                 current = current.next;
             }
