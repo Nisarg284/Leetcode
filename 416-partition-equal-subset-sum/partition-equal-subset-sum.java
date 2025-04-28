@@ -1,45 +1,72 @@
 class Solution {
+
+    public static int helper(int[]nums,int n,int target,int dp[][])
+    {
+        if(target == 0)
+        {
+            return 0;
+        }
+
+        if(n == 0)
+        {
+            return 1;
+        }
+
+        if(dp[n][target] != -1)
+        {
+            return dp[n][target];
+        }
+
+        if(nums[n-1] <= target)
+        {
+            int accept = helper(nums,n-1,target - nums[n-1],dp);
+            int reject = helper(nums,n-1,target,dp);
+
+            if( accept == 0 || reject == 0)
+            {
+                dp[n][target] = 0;
+            }else{
+                dp[n][target] = 1;
+            }
+        }else{
+            dp[n][target] = helper(nums,n-1,target,dp);
+        }
+
+        return dp[n][target];
+    }
     public boolean canPartition(int[] nums) {
 
+        int n = nums.length;
         int sum = 0;
-        for(int i = 0;i<nums.length;i++)
+        for(int i =0;i<n;i++)
         {
             sum+=nums[i];
         }
-        
 
-        if(sum % 2!=0)
+        if(sum % 2 != 0)
         {
             return false;
         }
 
-        int targetSum = sum / 2;
-        int n = nums.length;
+        int target = sum/2;
 
-        boolean[][] dp = new boolean[n+1][targetSum+1];
+        int dp[][] = new int[n+1][target+1];
 
-        for(int i=0;i<n;i++)
+        for(int i = 0;i<=n;i++)
         {
-            dp[i][0] = true;
-        }
-
-        for(int i=1;i<=n;i++)
-        {
-            for(int j = 1;j<=targetSum;j++)
+            for(int j = 0;j<=target;j++)
             {
-                if(nums[i-1] <= j)
-                {
-                    boolean accept = dp[i-1][j-nums[i-1]];
-                    boolean reject = dp[i-1][j];
-
-                    dp[i][j] = accept || reject;
-                }else{
-                    dp[i][j] = dp[i-1][j];
-                }
+                dp[i][j] = -1;
             }
         }
 
-        return dp[n][targetSum];
+        int ans = helper(nums,n,target,dp);
 
+        if(ans == 0)
+        {
+            return true;
+        }
+
+        return false;        
     }
 }
