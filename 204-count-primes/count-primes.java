@@ -56,7 +56,7 @@ class Solution {
 
 
 
-        boolean[] isPrime = new boolean[n + 1];
+        boolean[] isPrime = new boolean[n];
     Arrays.fill(isPrime, true);
 
     isPrime[0] = false;
