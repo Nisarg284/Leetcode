@@ -7,8 +7,6 @@ class Solution {
 
         for(int i = 1;i<nums.length;i++)
         {
-            int temp = maxProd;
-
             int currMax = Math.max(nums[i] * minProd,nums[i] * maxProd);
             int currMin = Math.min(nums[i] * maxProd,nums[i]*minProd);
 
@@ -19,7 +17,6 @@ class Solution {
 
         }
         
-
         return globalMax;
     }
 }
