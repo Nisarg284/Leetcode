@@ -68,6 +68,9 @@ class Solution {
            temp2 = temp2.next;
        }
 
+
+
+        // put random pointer into new LinkedList
        HashMap<Node,Node> map = new HashMap<>();
 
        temp1 = head;
@@ -90,10 +93,10 @@ class Solution {
             second.random = map.get(first.random); 
            }
 
-           if(first.random == null)
-           {
-            second.random = null;
-           }
+        //    if(first.random == null)
+        //    {
+        //     second.random = null;
+        //    }
 
 
        }
