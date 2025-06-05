@@ -86,11 +86,6 @@ class Solution {
                     {
                         vis.add(child);
                         q.add(child);
-
-                        // if(k == 0)
-                        // {
-                        //     res.add(child.val);
-                        // }
                     }
                 }
             }
@@ -101,16 +96,16 @@ class Solution {
 
         // System.out.println(parent);
 
-        for(TreeNode curr : parent.keySet())
-        {
-            System.out.print(curr.val+" : ");
+        // for(TreeNode curr : parent.keySet())
+        // {
+        //     System.out.print(curr.val+" : ");
 
-            for(TreeNode child : parent.get(curr) )
-            {
-                System.out.print(child.val+"->");
-            }
-            System.out.println();
-        }
+        //     for(TreeNode child : parent.get(curr) )
+        //     {
+        //         System.out.print(child.val+"->");
+        //     }
+        //     System.out.println();
+        // }
 
         return res;
         
