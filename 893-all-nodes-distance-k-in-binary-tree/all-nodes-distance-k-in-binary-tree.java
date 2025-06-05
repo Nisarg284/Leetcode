@@ -89,7 +89,10 @@ class Solution {
                     }
                 }
             }
-            
+            if(level == k)
+            {
+                break;
+            }
             level++;
         }
 
