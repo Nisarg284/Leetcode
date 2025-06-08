@@ -95,14 +95,21 @@ class Solution {
         vis[row][col] = true;
         region.add(new int[]{row, col});
 
-        // If on border, mark as not safe to flip
         if (row == 0 || col == 0 || row == n - 1 || col == m - 1)
             flag[0] = true;
 
+        // top
         dfsHelper(board, row - 1, col, vis, flag, region, n, m);
-        dfsHelper(board, row + 1, col, vis, flag, region, n, m);
-        dfsHelper(board, row, col - 1, vis, flag, region, n, m);
+
+        // right
         dfsHelper(board, row, col + 1, vis, flag, region, n, m);
+
+        // bottom
+        dfsHelper(board, row + 1, col, vis, flag, region, n, m);
+
+        // left
+        dfsHelper(board, row, col - 1, vis, flag, region, n, m);
+       
     }
 
     public void solve(char[][] board) {
