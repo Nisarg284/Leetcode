@@ -10,17 +10,6 @@ class Solution {
         int currPeri = 0;
         vis[row][col] = true;
 
-        // if(row == 0)
-        // {
-        //     currPeri++;
-        // }
-
-        // if(col == 0)
-        // {
-        //     currPeri++;
-        // }
-
-
 
         if( row == 0 || grid[row-1][col] == 0 )
         {
