@@ -8,11 +8,11 @@
 //         }
 
 //         vis[row][col] = true;
-//         // if(row == 0 || col == 0 || row == n-1 || col == m-1)
-//         // {
-//         //     flag[0] = true;
-//         //     return;
-//         // }
+//         if(row == 0 || col == 0 || row == n-1 || col == m-1)
+//         {
+//             flag[0] = true;
+//             // return;
+//         }
 
 //         // if(flag[0] == true)
 //         // {
@@ -31,11 +31,11 @@
 //         // left
 //         dfsHelper(grid,row,col-1,vis,flag,m,n);
 
-//          if(row == 0 || col == 0 || row == n-1 || col == m-1)
-//         {
-//             flag[0] = true;
-//             return;
-//         }
+//         //  if(row == 0 || col == 0 || row == n-1 || col == m-1)
+//         // {
+//         //     flag[0] = true;
+//         //     return;
+//         // }
 
 //         if(flag[0] == true)
 //         {
@@ -96,7 +96,10 @@ class Solution {
         region.add(new int[]{row, col});
 
         if (row == 0 || col == 0 || row == n - 1 || col == m - 1)
+        {
             flag[0] = true;
+        }
+            
 
         // top
         dfsHelper(board, row - 1, col, vis, flag, region, n, m);
@@ -117,17 +120,22 @@ class Solution {
         int m = board[0].length;
         boolean[][] vis = new boolean[n][m];
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (board[i][j] == 'O' && !vis[i][j]) {
-                    boolean[] flag = new boolean[1]; // false means safe to flip
+        for (int i = 0; i < n; i++) 
+        {
+            for (int j = 0; j < m; j++) 
+            {
+                if (board[i][j] == 'O' && !vis[i][j]) 
+                {
+                    boolean[] flag = new boolean[1];
                     List<int[]> region = new ArrayList<>();
 
                     dfsHelper(board, i, j, vis, flag, region, n, m);
 
-                    if (!flag[0]) {
-                        for (int[] cell : region) {
-                            board[cell[0]][cell[1]] = 'X';
+                    if (!flag[0]) 
+                    {
+                        for (int[] arr : region) 
+                        {
+                            board[arr[0]][arr[1]] = 'X';
                         }
                     }
                 }
