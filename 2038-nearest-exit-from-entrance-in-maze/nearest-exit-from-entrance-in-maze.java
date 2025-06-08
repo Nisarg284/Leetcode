@@ -25,7 +25,7 @@ class Solution {
         while (!q.isEmpty())
         {
             int size = q.size();
-            System.out.println(q.peek()[0] + " " + q.peek()[1]);
+            // System.out.println(q.peek()[0] + " " + q.peek()[1]);
 
             for(int i = 0;i<size;i++) {
 
@@ -35,7 +35,7 @@ class Solution {
                 int currRow = arr[0];
                 int currCol = arr[1];
 
-                System.out.println("Row: "+currRow +" Col: "+currCol);
+                // System.out.println("Row: "+currRow +" Col: "+currCol);
 
                 if ((currRow == 0 || currCol == 0 || currRow == n - 1 || currCol == m - 1) && (currRow != entrance[0] || currCol != entrance[1])) {
 
