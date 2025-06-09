@@ -39,11 +39,11 @@ class Solution {
         return oddCount < 2 ? true : false;
     }
 
-    public static void findPath(TreeNode root,HashMap<Integer,Integer> hm,int[]ans)
+    public static int findPath(TreeNode root,HashMap<Integer,Integer> hm,int[]ans)
     {
         if(root == null)
         {
-            return;
+            return 0;
         }
 
         hm.put(root.val,hm.getOrDefault(root.val,0)+1);
@@ -54,10 +54,10 @@ class Solution {
 
             boolean isCheck = isPalindrome(hm);
 
-            if(isCheck)
-            {
-                ans[0]++;
-            }
+            // if(isCheck)
+            // {
+            //     ans[0]++;
+            // }
             if(hm.get(root.val) == 1)
             {
                 hm.remove(root.val);
@@ -65,24 +65,24 @@ class Solution {
                 hm.put(root.val,hm.get(root.val)-1);
             }
 
-            // if(isCheck)
-            // {
-            //     return 1;
-            // }else{
-            //     return 0;
-            // }
+            if(isCheck)
+            {
+                return 1;
+            }else{
+                return 0;
+            }
 
-            return;
+            // return;
         }
 
 
         // System.out.println(hm);
 
-        // int left = findPath(root.left,hm);
-        // int right = findPath(root.right,hm);
+        int left = findPath(root.left,hm,ans);
+        int right = findPath(root.right,hm,ans);
 
-        findPath(root.left,hm,ans);
-        findPath(root.right,hm,ans);
+        // findPath(root.left,hm,ans);
+        // findPath(root.right,hm,ans);
 
         if(hm.get(root.val) == 1)
             {
@@ -98,7 +98,7 @@ class Solution {
         //         hm.put(root.val,hm.get(root.val)-1);
         //     }
 
-        // return left + right;
+        return left + right;
     }
     public int pseudoPalindromicPaths (TreeNode root) {
 
@@ -110,7 +110,10 @@ class Solution {
 
         findPath(root,hm,ans);
 
-        return ans[0];
+        // return ans[0];
+
+        return findPath(root,hm,ans);
+
         
     }
 }
