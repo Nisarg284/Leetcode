@@ -1,26 +1,9 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
 
-        
- 
-
         int m = grid[0].length;
         int n = grid.length;
 
-        if(n == 1 && m == 1)
-        {
-            if(grid[n-1][m-1] == 1)
-            {
-                return -1;
-            }
-
-            if(grid[n-1][m-1] == 0)
-            {
-                return 0;
-            }
-
-            // if(grid[n-1][m-1] == 0)
-        }
 
         boolean[][] vis = new boolean[n][m];
         Queue<int[]> q = new LinkedList<>();
@@ -34,6 +17,7 @@ class Solution {
                 if(grid[i][j] == 2)
                 {
                     q.add(new int[]{i,j});
+                    vis[i][j] = true;
                 }
 
                 if(grid[i][j] == 1)
