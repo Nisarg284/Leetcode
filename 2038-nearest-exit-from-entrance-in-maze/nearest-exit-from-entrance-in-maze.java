@@ -38,9 +38,7 @@ class Solution {
                 // System.out.println("Row: "+currRow +" Col: "+currCol);
 
                 if ((currRow == 0 || currCol == 0 || currRow == n - 1 || currCol == m - 1) && (currRow != entrance[0] || currCol != entrance[1])) {
-
                     return minDist;
-
                 }
                 
                     if( currRow > 0 && maze[currRow-1][currCol] == '.' && !vis[currRow - 1][currCol])
@@ -66,7 +64,6 @@ class Solution {
                         vis[currRow][currCol-1] = true;
                         q.add(new int[]{currRow,currCol-1});
                     }
-
             }
             minDist++;
         }
