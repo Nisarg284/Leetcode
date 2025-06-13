@@ -1,38 +1,39 @@
 class Solution {
 
-    public static void helper(int[] candidates, int target,List<Integer> miniAns,List<List<Integer>> ans,int idx)
+    public static void helper(int[] arr, int target,List<List<Integer>> ans,List<Integer> subAns,int idx)
     {
-        // base case:
         if(target == 0)
         {
-            List<Integer> temp = new ArrayList<>(miniAns);
-
-            ans.add(temp);
+            ans.add(new ArrayList<>(subAns));
             return;
         }
 
-        if(target <=-1)
+        if(target < 0)
         {
             return;
         }
 
-        for(int i=idx;i<candidates.length;i++)
+        for(int i = idx;i<arr.length;i++)
         {
-            if(target - candidates[i] >= 0 )
-            {
-                miniAns.add(candidates[i]);
-                helper(candidates,target-candidates[i],miniAns,ans,i);
-                miniAns.removeLast();
-            }
+            // if(target > 0)
+            // {
+
+                subAns.add(arr[i]);
+                // target-=arr[i];
+                helper(arr,target-arr[i],ans,subAns,i);
+                subAns.removeLast();
+                // target+=arr[i];
+            // }
+
         }
     }
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
 
-        List<Integer> miniAns = new ArrayList<>();
         List<List<Integer>> ans = new ArrayList<>();
-        int idx = 0;
 
-        helper(candidates,target,miniAns,ans,idx);
+        List<Integer> subAns = new ArrayList<>();
+
+        helper(candidates,target,ans,subAns,0);
 
         return ans;
         
