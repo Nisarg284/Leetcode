@@ -1,64 +1,44 @@
 class Solution {
-    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
 
-        int m = obstacleGrid.length;
-        int n = obstacleGrid[0].length;
-
-        int dp[][] = new int[m][n];
-
-
-        if(obstacleGrid[0][0] == 1)
+    public static int helper(int[][]arr,int row,int col,int[][]memo)
+    {
+        if(row < 0 || col < 0 || arr[row][col] == 1)
         {
             return 0;
         }
 
-
-        for(int i=0;i<m;i++)
+        if(row == 0 && col == 0)
         {
-            int count =0;
-            for(int j = 0;j<n;j++)
-            {
-                if( i == 0 || j==0)
-                {
-                    // if(obstacleGrid[i][j] == 1)
-                    // {
-                    //   dp[i][j] = 0;
-                    //   count++;
-                    //   if(count == n-1)
-                    //   {
-                    //     return 0;
-                    //   }
-                    // }else
-                    // {
-                    //     dp[i][j] = 1;
-                    // }
-
-                    if( i==0 && j==0)
-                    {
-                        dp[i][j] = 1;
-                    }
-
-                    if(obstacleGrid[0][j] != 1 && j != 0)
-                    {
-                        dp[i][j] = dp[0][j-1];
-                    }
-
-                    if(obstacleGrid[i][0]!= 1 && i != 0)
-                    {
-                        dp[i][j] = dp[i-1][0];
-                    }
-                        
-                }
-                else{
-                    if(obstacleGrid[i][j] != 1)
-                    {
-                      dp[i][j] = dp[i-1][j] + dp[i][j-1];
-                    }
-                }
-            }
+            return 1;
         }
 
-        return dp[m-1][n-1];
+        if(memo[row][col] != 0)
+        {
+            return memo[row][col];
+        }
+
+
+        int left = helper(arr,row,col-1,memo);
+        int up = helper(arr,row-1,col,memo);
+
+        memo[row][col] = left + up;
+
+        return memo[row][col];
+
+    }
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+
+
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+
+        
+        int[][] memo = new int[m][n];
+
+        int row = m-1;
+        int col = n-1;
+
+        return helper(obstacleGrid,row,col,memo);
         
     }
 }
