@@ -2,16 +2,11 @@ class Solution {
 
      public static void helper(int[]nums,int idx,List<List<Integer>>ans,List<Integer> subAns)
     {
-        // if(power <= 0)
-        // {
-        //     return;
-        // }
-
         ans.add(new ArrayList<>(subAns));
 
         for(int i = idx;i<nums.length;i++)
         {
-            System.out.print(nums[i] +" ");
+            // System.out.print(nums[i] +" ");
            
             if(i > idx && nums[i] == nums[i-1])
             {
@@ -34,7 +29,6 @@ class Solution {
 
         int n = nums.length;
         Arrays.sort(nums);
-        // int power = (int)Math.pow(2,n);
 
         List<List<Integer>> ans = new ArrayList<>();
         List<Integer> subAns = new ArrayList<>();
