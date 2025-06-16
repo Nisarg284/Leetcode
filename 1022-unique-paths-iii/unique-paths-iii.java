@@ -31,7 +31,7 @@ class Solution {
 
         vis[row][col] = true;
 
-        System.out.println("Row: "+row+", col: "+col);
+        // System.out.println("Row: "+row+", col: "+col);
 
         
         if(grid[row][col] == 2)
