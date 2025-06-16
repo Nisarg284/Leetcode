@@ -39,7 +39,6 @@ class Solution {
             vis[row][col] = false;
             if(safe == -1)
             {   
-                System.out.println("founded");
                 return 1;
             }
             return 0;
@@ -92,19 +91,9 @@ class Solution {
         int startCol = start[1];
         int safe = start[2] ;
 
-        // System.out.println("startRow: "+startRow+", startCol: "+startCol+", safe Block:"+ safe);
-
         int[][] dir = {{-1,0},{0,1},{1,0},{0,-1}};
 
         return dfsHelper(grid,startRow,startCol,safe,m,n,vis,dir);
-
-
-
-        // return 0;
-
-
-
-
         
     }
 }
