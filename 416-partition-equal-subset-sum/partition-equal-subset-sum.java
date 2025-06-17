@@ -1,44 +1,49 @@
 class Solution {
 
-    public static int helper(int[]nums,int n,int target,int dp[][])
+    public static boolean helper(int[]nums,int idx,int n,int target,Boolean[][] memo)
     {
+        if(idx == n)
+        {
+            return target == 0;
+        }
+
+        if(memo[idx][target] != null)
+        {
+            return memo[idx][target];
+        }
+
         if(target == 0)
         {
-            return 0;
+            return true;
         }
 
-        if(n == 0)
+        boolean exclude = helper(nums,idx+1,n,target,memo);
+        boolean include = false;
+
+
+        if(target >= nums[idx])
         {
-            return 1;
+            include = helper(nums,idx+1,n,target - nums[idx],memo);
         }
 
-        if(dp[n][target] != -1)
-        {
-            return dp[n][target];
-        }
+        // boolean include = helper(nums,idx+1,n,target - nums[idx],memo);
+        // boolean exclude = helper(nums,idx+1,n,target,memo);
 
-        if(nums[n-1] <= target)
-        {
-            int accept = helper(nums,n-1,target - nums[n-1],dp);
-            int reject = helper(nums,n-1,target,dp);
+        memo[idx][target] = include || exclude;
 
-            if( accept == 0 || reject == 0)
-            {
-                dp[n][target] = 0;
-            }else{
-                dp[n][target] = 1;
-            }
-        }else{
-            dp[n][target] = helper(nums,n-1,target,dp);
-        }
+        return memo[idx][target];
 
-        return dp[n][target];
+
+
+        // return include || exclude;
     }
+
     public boolean canPartition(int[] nums) {
 
         int n = nums.length;
         int sum = 0;
-        for(int i =0;i<n;i++)
+
+        for(int i = 0;i<n;i++)
         {
             sum+=nums[i];
         }
@@ -48,25 +53,15 @@ class Solution {
             return false;
         }
 
-        int target = sum/2;
 
-        int dp[][] = new int[n+1][target+1];
+        // Boolean[][] memo = new Boolean[n][target+1];
 
-        for(int i = 0;i<=n;i++)
-        {
-            for(int j = 0;j<=target;j++)
-            {
-                dp[i][j] = -1;
-            }
-        }
+        int target = sum / 2;
 
-        int ans = helper(nums,n,target,dp);
+        Boolean[][] memo = new Boolean[n][target+1];
 
-        if(ans == 0)
-        {
-            return true;
-        }
 
-        return false;        
+        return helper(nums,0,n,target,memo);
+        
     }
 }
