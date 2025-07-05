@@ -18,7 +18,7 @@ class Solution {
                 next = 'a';
             }
 
-            System.out.print(curr+" --> "+next+" ,");
+            // System.out.print(curr+" --> "+next+" ,");
 
             if(sb.length() > k)
             {
