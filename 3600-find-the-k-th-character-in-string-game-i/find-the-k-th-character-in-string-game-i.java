@@ -20,10 +20,10 @@ class Solution {
 
             System.out.print(curr+" --> "+next+" ,");
 
-            // if(sb.length() > k)
-            // {
-            //     return;
-            // }
+            if(sb.length() > k)
+            {
+                return;
+            }
             if(curr == 'z')
             {
                 sb.append('a');
