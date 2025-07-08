@@ -49,8 +49,8 @@ class Solution {
             incoming.computeIfAbsent(dest,k -> new ArrayList<>()).add(src);
         }
 
-        System.out.println(outgoing);
-        System.out.println(incoming);
+        // System.out.println(outgoing);
+        // System.out.println(incoming);
 
 
         int[]ans = new int[1];
