@@ -23,7 +23,7 @@ class Solution {
 
             if(next - curr == 1)
             {
-                System.out.println("curr : "+ curr + " next: "+next);
+                // System.out.println("curr : "+ curr + " next: "+next);
                 count++;
             }else{
                 count = 1;
