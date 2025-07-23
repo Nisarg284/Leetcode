@@ -1,75 +1,60 @@
 class Solution {
 
-    public static boolean dfsHelper(int src,int dest,HashMap<Integer,List<Integer>> graph,Set<Integer> vis)
+    public static boolean dfsHelper(HashMap<Integer,ArrayList<Integer>> graph,int src,boolean[]vis,int destination)
     {
-        if(src == dest)
+        vis[src] = true;
+
+        if(src == destination)
         {
             return true;
         }
 
-        vis.add(src);
-
-        List<Integer> currAl = graph.get(src);
-        for(int i = 0;i<currAl.size();i++)
+        ArrayList<Integer> destNodes = graph.get(src);
+        for(int dest : destNodes)
         {
-            if(!vis.contains(currAl.get(i)))
+            if(!vis[dest])
             {
-                if(dfsHelper(currAl.get(i),dest,graph,vis))
+                boolean flag = dfsHelper(graph,dest,vis,destination);
+                if(flag)
                 {
                     return true;
                 }
-
             }
         }
 
         return false;
     }
-
     public boolean validPath(int n, int[][] edges, int source, int destination) {
-        
 
-        HashMap<Integer,List<Integer>> hm = new HashMap<>();
+        HashMap<Integer,ArrayList<Integer>> graph = new HashMap<>();
 
-        for(int[] edge : edges)
+        for(int[] i : edges)
         {
-            int u = edge[0];
-            int v = edge[1];
+            int src = i[0];
+            int dest = i[1];
 
-        // Normal Code
-
-            // if(!hm.containsKey(u))
-            // {
-            //     List<Integer> al = new ArrayList<>();
-            //     al.add(v);
-            //     hm.put(u,al);
-            // }else{
-            //     List<Integer> al = hm.get(u);
-            //     al.add(v);
-            //     hm.put(u,al);
-            // }
-
-            // if(!hm.containsKey(v))
-            // {
-            //     List<Integer> al = new ArrayList<>();
-            //     al.add(u);
-            //     hm.put(v,al);
-            // }else{
-            //     List<Integer> al = hm.get(v);
-            //     al.add(u);
-            //     hm.put(v,al);
-            // }
-
-            // with lamda expression
-            hm.computeIfAbsent(u,k->new ArrayList<>()).add(v);
-            hm.computeIfAbsent(v,k->new ArrayList<>()).add(u);
+            graph.computeIfAbsent(src,k->new ArrayList<>()).add(dest);
+            graph.computeIfAbsent(dest,k->new ArrayList<>()).add(src);
         }
 
+        boolean[] vis = new boolean[n];
+
+        // for(int i = 0;i<n;i++)
+        // {
+        //     if(!vis[i])
+        //     {
+               boolean flag = dfsHelper(graph,source,vis,destination);
+
+               if(flag)
+               {
+                return true;
+               }
+        //     }
+        // }
+
+        return false;
 
 
-        Set<Integer> vis = new HashSet<>();
         
-
-
-        return dfsHelper(source,destination,hm,vis);
     }
 }
