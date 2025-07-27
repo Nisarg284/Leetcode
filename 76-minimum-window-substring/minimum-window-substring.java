@@ -16,7 +16,7 @@ public String minWindow(String s, String t) {
             idealMap.put(ch, idealMap.getOrDefault(ch, 0) + 1);
         }
 
-        System.out.println("IdealMap: "+idealMap);
+        // System.out.println("IdealMap: "+idealMap);
 
         int len = Integer.MAX_VALUE;
         int i = 0;
@@ -35,7 +35,7 @@ public String minWindow(String s, String t) {
             }
 
             while (counter == idealMap.size()) {
-                System.out.println("run inner");
+                // System.out.println("run inner");
                 char left = s.charAt(i);
                 int currLen = j - i + 1;
                 if (currLen < len) {
