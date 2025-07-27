@@ -16,6 +16,8 @@ public String minWindow(String s, String t) {
             idealMap.put(ch, idealMap.getOrDefault(ch, 0) + 1);
         }
 
+        System.out.println("IdealMap: "+idealMap);
+
         int len = Integer.MAX_VALUE;
         int i = 0;
         int j = 0;
