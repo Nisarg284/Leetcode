@@ -10,7 +10,7 @@ class Solution {
             hm.put(i,hm.getOrDefault(i,0)+1);
         }
 
-        System.out.println(hm);
+        // System.out.println(hm);
 
         for(int ele : hm.keySet())
         {
