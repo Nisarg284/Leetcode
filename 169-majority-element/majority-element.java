@@ -1,27 +1,27 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        
 
-      HashMap<Integer,Integer> hm = new HashMap<>();
+        int max = 0;
 
-      for(int i=0;i<nums.length;i++)
-      {
-        hm.put(nums[i],hm.getOrDefault(nums[i],0)+1);
-      }
+        HashMap<Integer,Integer> hm = new HashMap<>();
 
-
-        int major = Integer.MIN_VALUE;
-        int ele = nums[0];
-      for(Integer i : hm.keySet())
-      {
-        if(hm.get(i)> major)
+        for(int i : nums)
         {
-            major = hm.get(i);
-            ele = i;
+            hm.put(i,hm.getOrDefault(i,0)+1);
         }
-      }
 
-      return ele;
+        System.out.println(hm);
+
+        for(int ele : hm.keySet())
+        {
+            if(hm.get(ele) > nums.length /2)
+            {
+                max = ele;
+                return max;
+            }
+        }
+
+        return 1;
         
     }
 }
