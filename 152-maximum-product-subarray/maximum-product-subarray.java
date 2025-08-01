@@ -1,22 +1,36 @@
 class Solution {
     public int maxProduct(int[] nums) {
 
-        int globalMax = nums[0];
+        int n = nums.length;
+
+        int ans = nums[0];
+
         int maxProd = nums[0];
+        int currMaxProd;
+
         int minProd = nums[0];
+        int currMinProd;
 
-        for(int i = 1;i<nums.length;i++)
+
+        for(int i = 1;i<n;i++)
         {
-            int currMax = Math.max(nums[i] * minProd,nums[i] * maxProd);
-            int currMin = Math.min(nums[i] * maxProd,nums[i]*minProd);
+            int curr = nums[i];
 
-            maxProd = Math.max(nums[i] ,currMax);
-            minProd = Math.min(nums[i],currMin);
 
-            globalMax = Math.max(globalMax,maxProd);
+            currMinProd = Math.min(curr * minProd , curr * maxProd);
+            currMaxProd = Math.max(curr * maxProd , curr * minProd);
+
+
+            minProd = Math.min(curr,currMinProd);
+            maxProd = Math.max(curr,currMaxProd);
+
+            ans = Math.max(ans,maxProd);
 
         }
+
+        // int ans = Math.max(maxProd * minProd,Math.max(maxProd,minProd));
+
+        return ans;
         
-        return globalMax;
     }
 }
