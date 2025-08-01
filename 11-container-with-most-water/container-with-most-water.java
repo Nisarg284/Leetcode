@@ -1,31 +1,32 @@
 class Solution {
     public int maxArea(int[] height) {
 
-        int i=0;
-        int j = height.length-1;
+        int n = height.length;
 
-        int maxWater=0;
+        int start = 0;
+        int end = n-1;
 
-        while(i < j)
+        int maxWater = 0;
+
+        while(start < end)
         {
-            // calculate current water
-            int containsWater = Math.min(height[i],height[j]) * (j-i);
 
-            maxWater = Math.max(maxWater,containsWater);
+            System.out.println(" Run ");
+            int currArea = end - start;
+            int currWater = currArea * Math.min(height[start],height[end]);
 
-            // move i when height[i] < height[j]
-            if(height[i] < height[j])
+            maxWater = Math.max(currWater,maxWater);
+
+            if(height[start] <= height[end])
             {
-                i++;
+                start++;
+            }else{
+                end--;
             }
-            else{
-                j--;
-            }
+
         }
 
         return maxWater;
-
-
         
     }
 }
