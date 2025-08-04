@@ -38,7 +38,7 @@ class Solution {
                 boolean[] flag = {false};
                 if(grid[i][j] == 1 && !vis[i][j])
                 {
-                    System.out.println("Row : "+i + " col : "+ j);
+                    // System.out.println("Row : "+i + " col : "+ j);
                     int blocks =  dfsHelper(grid,i,j,n,m,vis,flag);
                     if(!flag[0])
                     {
