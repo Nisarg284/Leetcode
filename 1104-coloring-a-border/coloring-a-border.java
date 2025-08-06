@@ -1,80 +1,54 @@
 class Solution {
 
+    public static void dfsHelper(int[][] grid, int row, int col, int newColor,int originalCLR,boolean[][]vis,int[][]dir,int n,int m)
+    {
+        boolean isBorder = false;
+        vis[row][col] = true;
 
-//     public static boolean dfsHelper(int[][] grid, int row, int col, int newColor,int originalClr,boolean[][]vis,int n,int m)
-//     {
-//         if(row < 0 || col < 0 || row > n-1 || col > m-1 || vis[row][col])
-//         {
-//             return false;
-//         }
-//         vis[row][col] = true;
+        for(int[] d : dir)
+        {
+            int newRow = row + d[0];
+            int newCol = col + d[1];
 
-//         if(grid[row][col] != originalClr)
-//         {
-//             // vis[row][col] = true;
-//             return true;
-//         }
-//         // vis[row][col] = true;
-
-       
+            if(newRow < 0 || newCol < 0 || newRow >= n || newCol >= m || (grid[newRow][newCol] != originalCLR && grid[newRow][newCol] >= 1))
+            {
+                // grid[row][col] = newColor;
+                isBorder = true;
+            }else if(!vis[newRow][newCol]){
+                dfsHelper(grid,newRow,newCol,newColor,originalCLR,vis,dir,n,m);
+            }
+        }
 
 
-//         boolean top = dfsHelper(grid,row-1,col,newColor,originalClr,vis,n,m);
-//         boolean right = dfsHelper(grid,row,col+1,newColor,originalClr,vis,n,m);
-//         boolean bottom = dfsHelper(grid,row+1,col,newColor,originalClr,vis,n,m);
-//         boolean left = dfsHelper(grid,row,col-1,newColor,originalClr,vis,n,m);
 
-//         if(top || right || bottom || left)
-//         {
-//             grid[row][col] = newColor;
-//             return true;
-//         }
+        if(isBorder)
+        {
+            grid[row][col] = -1;
+        }
 
-//         return false;
-//     }
-    public int[][] colorBorder(int[][] grid, int row, int col, int newColor) {
-
+    }
+    public int[][] colorBorder(int[][] grid, int row, int col, int color) {
+    
         int n = grid.length;
         int m = grid[0].length;
 
-        int originalClr = grid[row][col];
-
+        int originalCLR = grid[row][col];
         boolean[][] vis = new boolean[n][m];
+        int[][] dir = {{-1,0},{0,1},{1,0},{0,-1}};
 
-        dfsHelper(grid,row,col,newColor,originalClr,vis,n,m);
+        dfsHelper(grid,row,col,color,originalCLR,vis,dir,n,m);
 
+        for(int i = 0;i<n;i++)
+        {
+            for(int j = 0;j<m;j++)
+            {
+                if(grid[i][j] == -1)
+                {
+                    grid[i][j] = color;
+                }
+            }
+        }
 
         return grid;
-        
     }
-
-
-
-public static boolean dfsHelper(int[][] grid, int row, int col, int newColor, int originalClr, boolean[][] vis, int n, int m) {
-    if(row < 0 || col < 0 || row >= n || col >= m) {
-        return true; // Out of bounds, so current cell is border
-    }
-    
-    if(vis[row][col]) return false;
-
-    if(grid[row][col] != originalClr) {
-        return true; // Neighboring cell is different, so current cell is border
-    }
-
-    vis[row][col] = true;
-
-    boolean isBorder = false;
-
-    if (dfsHelper(grid, row - 1, col, newColor, originalClr, vis, n, m)) isBorder = true;
-    if (dfsHelper(grid, row + 1, col, newColor, originalClr, vis, n, m)) isBorder = true;
-    if (dfsHelper(grid, row, col - 1, newColor, originalClr, vis, n, m)) isBorder = true;
-    if (dfsHelper(grid, row, col + 1, newColor, originalClr, vis, n, m)) isBorder = true;
-
-    if (isBorder) {
-        grid[row][col] = newColor;
-    }
-
-    return false; // The current cell is not the border
 }
-}
-
