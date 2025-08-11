@@ -16,7 +16,7 @@ class Solution {
             // sum += (nums[i] + mid - 1) / mid;
         }
 
-        System.out.println(sum);
+        // System.out.println(sum);
 
         return sum <= threshold;
     }
