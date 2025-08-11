@@ -1,52 +1,45 @@
 class Solution {
 
-    public static boolean isValid(int[] arr, int m,int mid,int n)
+    public static boolean isValid(int[]arr,int m,int mid,int n)
     {
-        int place = 1;
         int prev = arr[0];
+        int ballsPlaced = 1;
 
         for(int i = 1;i<n;i++)
         {
-            if( arr[i] - prev >= mid)
+            if((arr[i] - prev) >= mid)
             {
                 prev = arr[i];
-                place++;
-            }
-
-            if(place >= m)
-            {
-                return true;
+                ballsPlaced++;
             }
         }
-       
 
-        return false;
+        return ballsPlaced >= m;
+
     }
-    public int maxDistance(int[] position, int m) {
-        
+    public int maxDistance(int[] nums, int m) {
 
-        Arrays.sort(position);
+        Arrays.sort(nums);
 
-        int n = position.length;
+        int n = nums.length;
 
-        int start = 1;
-        int end = position[n-1] - position[0];
+        int i = 1;
+        int j = nums[n-1] - nums[0];
 
-        // int ans = 0;
-
-        while(start <= end)
+        while(i <= j)
         {
-            int mid = start + (end - start)/2;
+            int mid = (i + j) / 2;
 
-            if(!isValid(position,m,mid,n))
+            if(isValid(nums,m,mid,n))
             {
-                // ans = mid;
-                end = mid-1;
-            }else{
-                start = mid+1;
+                i = mid + 1;
+            }else
+            {
+                j = mid - 1;
             }
         }
 
-        return start-1;
+        return i-1;
+        
     }
 }
