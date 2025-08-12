@@ -18,7 +18,7 @@ class Solution {
 
         }
 
-        System.out.println(currHrs + " ");
+        // System.out.println(currHrs + " ");
 
         return currHrs <= hour;
     }
