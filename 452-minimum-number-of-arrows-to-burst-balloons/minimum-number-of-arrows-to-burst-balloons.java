@@ -14,15 +14,21 @@ class Solution {
 
             int start = points[i][0];
             int end = points[i][1];
-            if(lastEnd >= start)
-            {
-                continue;
-            }else{
 
-                System.out.println("lastEnd : "+lastEnd);
+            if(start > lastEnd)
+            {
                 lastEnd = end;
                 arrows++;
             }
+            // if(lastEnd >= start)
+            // {
+            //     continue;
+            // }else{
+
+            //     System.out.println("lastEnd : "+lastEnd);
+            //     lastEnd = end;
+            //     arrows++;
+            // }
         }
 
         return arrows;
