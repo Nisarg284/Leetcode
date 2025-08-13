@@ -21,7 +21,7 @@ class Solution {
             if(j < start)
             {
 
-                System.out.println(" j : "+j+" , start : "+start+" , end : "+ end);
+                // System.out.println(" j : "+j+" , start : "+start+" , end : "+ end);
                 freeDays += (start - j);
                 j = end+1;
             }else{
@@ -29,7 +29,7 @@ class Solution {
             }
         }
 
-        System.out.println(j);
+        // System.out.println(j);
 
         if(j <= days)
         {
