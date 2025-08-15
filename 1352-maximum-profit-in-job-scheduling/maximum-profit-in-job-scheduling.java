@@ -25,7 +25,7 @@ class Solution {
             }
         }
 
-        System.out.println("index : "+idx + " , Target : "+ target);
+        // System.out.println("index : "+idx + " , Target : "+ target);
 
         return idx;
     }
