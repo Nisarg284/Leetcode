@@ -20,7 +20,7 @@ class Solution {
             }
         }
 
-        System.out.println("idx : " + idx + " , target : "+target );
+        // System.out.println("idx : " + idx + " , target : "+target );
 
         return idx;
     }
@@ -57,12 +57,12 @@ class Solution {
 
 
 
-        System.out.println("len : "+len);
+        // System.out.println("len : "+len);
 
-        for(int i = 0;i<len;i++)
-        {
-            System.out.println("i"+(i+1)+" : "+dp[i]);
-        }
+        // for(int i = 0;i<len;i++)
+        // {
+        //     System.out.println("i"+(i+1)+" : "+dp[i]);
+        // }
 
         return dp[len -1];
     }
