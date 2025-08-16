@@ -1,50 +1,43 @@
 class Solution {
 
-    public static void dfsUtil(char[][] grid,int row,int col,boolean[][] vis,int m,int n)
+    public static void dfsHelper(char[][]grid,int row,int col,boolean[][]vis,int[][]dir,int n,int m)
     {
-        if(row < 0 || col >= m || row >= n || col < 0 || grid[row][col] == '0' || vis[row][col] == true)
-        {
-            return;
-        }
-
         vis[row][col] = true;
 
-        // Top
-        dfsUtil(grid,row-1,col,vis,m,n);
+        for(int[] d : dir)
+        {
+            int newRow = row + d[0];
+            int newCol = col + d[1];
 
-        // right
-        dfsUtil(grid,row,col+1,vis,m,n);
-
-        // bottom
-        dfsUtil(grid,row+1,col,vis,m,n);
-
-        // left
-        dfsUtil(grid,row,col-1,vis,m,n);
-
+            if( newRow >= 0 && newRow < n && newCol >= 0 && newCol < m && grid[newRow][newCol] != '0' && !vis[newRow][newCol])
+            {
+                dfsHelper(grid,newRow,newCol,vis,dir,n,m);
+            }
+        }
     }
     public int numIslands(char[][] grid) {
-
 
         int n = grid.length;
         int m = grid[0].length;
 
-        int islandCount = 0;
-
         boolean[][] vis = new boolean[n][m];
+        int[][] dir = {{-1,0},{0,1},{1,0},{0,-1}};
+
+        int count = 0;
 
         for(int i = 0;i<n;i++)
         {
             for(int j = 0;j<m;j++)
             {
-                if(grid[i][j] == '1' && vis[i][j] == false)
+                if(grid[i][j] == '1' && !vis[i][j])
                 {
-                    islandCount++;
-                    dfsUtil(grid,i,j,vis,m,n);
+                    count++;
+                    dfsHelper(grid,i,j,vis,dir,n,m);
                 }
             }
         }
 
-        return islandCount;
+        return count;
         
     }
 }
