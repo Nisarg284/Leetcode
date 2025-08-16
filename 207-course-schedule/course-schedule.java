@@ -1,50 +1,28 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
 
-        HashMap<Integer,ArrayList<Integer>> graph = new HashMap<>();
-        int n = prerequisites.length;
-        int m = numCourses;
+        HashMap<Integer,List<Integer>> graph = new HashMap<>();
+        int[] inDegree = new int[numCourses];
 
-        int[] indegree = new int[numCourses];
-
-        // for(int i = 0;i<n;i++)
-        // {
-        //     for(int j = 0;j<m;j++)
-        //     {
-        //         int dest = i;
-        //         int src = j;
-                
-        //         indegree[dest]++;
-        //         graph.computeIfAbsent(src,k -> new ArrayList<>()).add(dest);
-                
-        //     }
-        // }
-
-        for(int[] i: prerequisites)
+        for(int[]pre : prerequisites)
         {
-            int dest = i[0];
-            int src = i[1];
+            int src = pre[1];
+            int dest = pre[0];
 
-            indegree[dest]++;
-            graph.computeIfAbsent(src,k -> new ArrayList<>()).add(dest);
+            graph.computeIfAbsent(src,key -> new ArrayList<>()).add(dest);
+            inDegree[dest]++;
         }
 
-        System.out.println("Map: "+graph);
-
         Queue<Integer> q = new LinkedList<>();
-
-
-        for(int i = 0;i<numCourses;i++)
+        for(int i = 0;i<inDegree.length;i++)
         {
-            if(indegree[i] == 0)
+            if(inDegree[i] == 0)
             {
                 q.add(i);
             }
         }
 
-        System.out.println("Queue: "+q);
         int count = 0;
-
         while(!q.isEmpty())
         {
             int size = q.size();
@@ -54,22 +32,24 @@ class Solution {
                 int src = q.remove();
                 count++;
 
-                ArrayList<Integer> destNodes = graph.get(src);
-                if(destNodes == null)
+                List<Integer> dest = graph.get(src);
+                if(dest == null)
                 {
                     continue;
                 }
 
-                for(int dest : destNodes)
+                for(int d : dest)
                 {
-                    indegree[dest]--;
-                    if(indegree[dest] == 0)
+                    inDegree[d]--;
+                    if(inDegree[d] == 0)
                     {
-                        q.add(dest);
+                        q.add(d);
                     }
                 }
             }
         }
-        return count == numCourses;   
+
+        return count == numCourses;
+        
     }
 }
