@@ -1,24 +1,20 @@
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
 
+        HashMap<Integer,List<Integer>> graph = new HashMap<>();
 
-        HashMap<Integer,ArrayList<Integer>> graph = new HashMap<>();
         int[] inDegree = new int[numCourses];
 
-
-        // Redefine Graph representation & count in-degree
-        for(int[] i: prerequisites)
+        for(int[] pre : prerequisites)
         {
-            int src = i[1];
-            int dest = i[0];
+            int src = pre[1];
+            int dest = pre[0];
 
+            graph.computeIfAbsent(src,key -> new ArrayList<>()).add(dest);
             inDegree[dest]++;
-            graph.computeIfAbsent(src,k -> new ArrayList<>()).add(dest);
         }
 
         Queue<Integer> q = new LinkedList<>();
-
-        // put all 0 in-degree vertices in queue
         for(int i = 0;i<inDegree.length;i++)
         {
             if(inDegree[i] == 0)
@@ -27,36 +23,35 @@ class Solution {
             }
         }
 
-        int[] seq = new int[numCourses];
         int idx = 0;
-
-
+        int[] result = new int[numCourses];
         while(!q.isEmpty())
         {
             int size = q.size();
-
             for(int i = 0;i<size;i++)
             {
                 int src = q.remove();
-                seq[idx++] = src;
+                result[idx++] = src;
 
-                ArrayList<Integer> destNodes = graph.get(src);
-
-                if(destNodes == null)
+                List<Integer> dest = graph.get(src);
+                if(dest == null)
                 {
                     continue;
                 }
 
-                for(int dest : destNodes)
+                for(int d : dest)
                 {
-                    inDegree[dest]--;
-                    if(inDegree[dest] == 0)
+                    inDegree[d]--;
+                    if(inDegree[d] == 0)
                     {
-                        q.add(dest);
+                        q.add(d);
                     }
                 }
             }
+
         }
-        return idx == numCourses ? seq : new int[0];        
+
+        return idx == numCourses ? result : new int[0];
+        
     }
 }
