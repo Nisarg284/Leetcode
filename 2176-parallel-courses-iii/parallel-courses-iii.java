@@ -20,7 +20,7 @@ class Solution {
 
         for(int i = 1;i<=n;i++)
         {
-            System.out.print("src : "+i+" degree : "+inDegree[i]+ " , ");
+            // System.out.print("src : "+i+" degree : "+inDegree[i]+ " , ");
             if(inDegree[i] == 0)
             {
                 q.add(new int[]{i,time[i-1]});
