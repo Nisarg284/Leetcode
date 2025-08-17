@@ -38,12 +38,12 @@ class Solution {
         while( count > 2)
         {
             int size = q.size();
-            count -= size;
+            // count -= size;
 
             for(int i = 0;i<size;i++)
             {
                 int src = q.remove();
-                // count--;
+                count--;
 
                 List<Integer> destNodes = graph.get(src);
                 if(destNodes == null)
