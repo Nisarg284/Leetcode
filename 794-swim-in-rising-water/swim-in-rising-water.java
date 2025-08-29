@@ -44,7 +44,7 @@ class Solution {
                 {
                     int newHeight = grid[newRow][newCol];
                     int maxHeight = Math.max(height,newHeight);
-                    System.out.println("height: "+ height + ", newHeight: "+newHeight);
+                    // System.out.println("height: "+ height + ", newHeight: "+newHeight);
                     dist[newRow][newCol] = maxHeight;
                     pq.add(new int[]{newRow,newCol,maxHeight});
                 }
