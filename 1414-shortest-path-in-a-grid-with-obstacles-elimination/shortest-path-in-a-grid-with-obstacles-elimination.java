@@ -4,9 +4,9 @@ class Solution {
         int n = grid.length;
         int m = grid[0].length;
 
-        // if (k >= n + m - 2) {
-        //     return n + m - 2;
-        // }
+        if (k >= n + m - 2) {
+            return n + m - 2;
+        }
 
         Queue<int[]> q = new LinkedList<>();
 
