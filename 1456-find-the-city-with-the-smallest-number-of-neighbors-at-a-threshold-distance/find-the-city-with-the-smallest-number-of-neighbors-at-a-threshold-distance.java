@@ -36,19 +36,19 @@ class Solution {
             }
         }
 
-        for(int i : dist)
-        {
-            System.out.print(i+" ");
-        }
-        System.out.println();
-        // dist[source] = -1;
+        // for(int i : dist)
+        // {
+        //     System.out.print(i+" ");
+        // }
+        // System.out.println();
+        // // dist[source] = -1;
 
         // count city distance  <= dt
         int count = (int)Arrays.stream(dist)
                                 .filter(i -> i <= dt && i != 0)
                                 .count();
 
-        System.out.println(count);
+        // System.out.println(count);
 
         
         int[] data = {count,source};
@@ -84,7 +84,7 @@ class Solution {
 
             if(minCityCount >= currMinCityCount)
             {
-                System.out.println("Yes");
+                // System.out.println("Yes");
                 minCityCount = currMinCityCount;
                 city = newCity;
             }
