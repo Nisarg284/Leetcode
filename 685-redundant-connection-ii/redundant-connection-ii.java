@@ -23,8 +23,8 @@ class Solution {
             }
         }
 
-        System.out.println("candidate1-> src :  "+candidate1[0]+" , dest : "+candidate1[1]);
-        System.out.println("candidate2-> src :  "+candidate2[0]+" , dest : "+candidate2[1]);
+        // System.out.println("candidate1-> src :  "+candidate1[0]+" , dest : "+candidate1[1]);
+        // System.out.println("candidate2-> src :  "+candidate2[0]+" , dest : "+candidate2[1]);
 
         boolean flag = candidate1[0] == 0;
         DSU set = new DSU(n);
