@@ -1,26 +1,30 @@
 class Solution {
-    public static void helper(int[] nums, int i, List<Integer> ans, List<List<Integer>> finalAns) {
-        if (i == nums.length) {
-            finalAns.add(new ArrayList<>(ans));
-            return;
-        }
-        ans.add(nums[i]);
-        helper(nums, i + 1, ans, finalAns);
-        ans.remove(ans.size()-1);
-        helper(nums, i + 1, ans, finalAns);
 
+
+    public static void helper(int[]arr,int start,List<List<Integer>> ans,List<Integer> curr,int n)
+    {
+       ans.add(new ArrayList<>(curr));
+
+       for(int i = start;i<n;i++)
+       {
+            curr.add(arr[i]);
+
+            helper(arr,i+1,ans,curr,n);
+
+            curr.removeLast();
+       }
     }
+    public List<List<Integer>> subsets(int[] nums) {
 
-    public static List<List<Integer>> subsets(int[] nums) {
 
-        List<List<Integer>> finalAns = new ArrayList<>();
-        List<Integer> ans = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        int n = nums.length;
 
-        int i = 0;
-        helper(nums, i, ans, finalAns);
+        helper(nums,0,ans,new ArrayList<>(),n);
 
-        // finalAns.add(ans);
+        // System.out.println(ans);
 
-        return finalAns;
+        return ans;
+        
     }
 }
