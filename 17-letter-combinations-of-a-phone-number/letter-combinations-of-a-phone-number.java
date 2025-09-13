@@ -1,56 +1,55 @@
 class Solution {
 
-    public static void helper(String digits,HashMap<Character,String>hm,int iter,StringBuilder sb,List<String>ans)
+
+    public static void helper(String digits,int idx,List<String> ans,HashMap<Character,List<Character>> hm,StringBuilder sb,int n)
     {
-        if(iter == digits.length())
+        if(sb.length() == digits.length())
         {
+            ans.add(sb.toString());
             return;
         }
 
-        String s = hm.get(digits.charAt(iter));
-
-        for(int i = 0;i<s.length();i++)
+        for(int i = idx;i<n;i++)
         {
-            sb.append(s.charAt(i));
-            helper(digits,hm,iter+1,sb,ans);
-
-            if(sb.length() == digits.length())
+            char curr = digits.charAt(i);
+            // List<C hm.get(curr);
+            for(Character ch : hm.get(curr))
             {
-                ans.add(sb.toString());
+                sb.append(ch);
+                helper(digits,i+1,ans,hm,sb,n);
+                sb.deleteCharAt(sb.length()-1);
             }
-
-            sb.deleteCharAt(iter);
         }
     }
+
     public List<String> letterCombinations(String digits) {
 
         if(digits.length() == 0)
         {
             return new ArrayList<>();
         }
-        
-        HashMap<Character,String> hm = new HashMap<>();
-        hm.put('2',"abc");
-        hm.put('3',"def");
-        hm.put('4',"ghi");
-        hm.put('5',"jkl");
-        hm.put('6',"mno");
-        hm.put('7',"pqrs");
-        hm.put('8',"tuv");
-        hm.put('9',"wxyz");
+        HashMap<Character,List<Character>> hm = new HashMap<>();
+
+        hm.put('2',Arrays.asList('a','b','c'));
+        hm.put('3',Arrays.asList('d','e','f'));
+        hm.put('4',Arrays.asList('g','h','i'));
+        hm.put('5',Arrays.asList('j','k','l'));
+        hm.put('6',Arrays.asList('m','n','o'));
+        hm.put('7',Arrays.asList('p','q','r','s'));
+        hm.put('8',Arrays.asList('t','u','v'));
+        hm.put('9',Arrays.asList('w','x','y','z'));
+
 
         List<String> ans = new ArrayList<>();
+        int idx = 0;
+        int n = digits.length();
 
-        int iter  = 0;
-
-        helper(digits,hm,iter,new StringBuilder(),ans);
+        helper(digits,idx,ans,hm,new StringBuilder(),n);
 
         return ans;
 
 
 
-
-
-
+        
     }
 }
