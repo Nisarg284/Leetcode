@@ -19,13 +19,13 @@ class Solution {
                     String newStr = str.substring(0,i) + newChar + str.substring(i+1);
                     ans.add(newStr);
 
-                    System.out.println(STR."Lower : \{newStr}");
+                    // System.out.println(STR."Lower : \{newStr}");
                     helper(newStr,i+1,ans,n);
                 }else{
                     char newChar = Character.toUpperCase(curr);
                     String newStr = str.substring(0,i) + newChar + str.substring(i+1);
                     ans.add(newStr);
-                    System.out.println(STR."Upper : \{newStr}");
+                    // System.out.println(STR."Upper : \{newStr}");
 
                     helper(newStr,i+1,ans,n);
                 }
