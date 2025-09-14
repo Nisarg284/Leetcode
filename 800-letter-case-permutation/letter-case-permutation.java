@@ -1,44 +1,50 @@
 class Solution {
 
-   public static void helper(String str,int idx,List<String> ans,StringBuilder sb)
+    public static void helper(String str,int start,List<String> ans, int n)
     {
-        if(idx > str.length())
+        if(start == n)
         {
             return;
         }
 
-
-        if(sb.length() == str.length())
+        for(int i = start;i<n;i++)
         {
-            ans.add(sb.toString());
-            return;
-        }
+            char curr = str.charAt(i);
 
-        char ch = str.charAt(idx);
-        sb.append(ch);
-        helper(str, idx+1, ans, sb);
-        sb.deleteCharAt(idx);
+            if(Character.isLetter(curr))
+            {
+                if(Character.isUpperCase(curr))
+                {
+                    char newChar = Character.toLowerCase(curr);
+                    String newStr = str.substring(0,i) + newChar + str.substring(i+1);
+                    ans.add(newStr);
 
+                    System.out.println(STR."Lower : \{newStr}");
+                    helper(newStr,i+1,ans,n);
+                }else{
+                    char newChar = Character.toUpperCase(curr);
+                    String newStr = str.substring(0,i) + newChar + str.substring(i+1);
+                    ans.add(newStr);
+                    System.out.println(STR."Upper : \{newStr}");
 
-        if(Character.isLetter(ch))
-        {
-            char switchCh = Character.isUpperCase(ch) ? Character.toLowerCase(ch) : Character.toUpperCase(ch);
-
-            sb.append(switchCh);
-            helper(str, idx+1, ans, sb);
-            sb.deleteCharAt(idx);
+                    helper(newStr,i+1,ans,n);
+                }
+            }
         }
     }
 
-    
     public List<String> letterCasePermutation(String s) {
 
+
+        int n = s.length();
         List<String> ans = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
 
-        helper(s,0,ans,sb);
+        int idx = 0;
+
+        helper(s,idx,ans,n);
+        ans.add(s);
+
         return ans;
-
-
+        
     }
 }
