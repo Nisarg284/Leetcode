@@ -21,30 +21,23 @@ class Solution {
             return new ArrayList<>();
         }
 
-
-        Queue<TreeNode> q = new LinkedList<>();
         List<Integer> ans = new ArrayList<>();
 
-        int level = 0;
+        Queue<TreeNode> q = new LinkedList<>();
         q.add(root);
 
         while(!q.isEmpty())
         {
             int size = q.size();
-
-            for(int i=0;i<size;i++)
+            for(int i = 0;i<size;i++)
             {
                 TreeNode curr = q.remove();
 
-                if( i == 0)
+                if(i == size -1)
                 {
                     ans.add(curr.val);
-                }else{
-                    ans.set(level,curr.val);
                 }
-
-
-                if(curr.left!=null)
+                if(curr.left != null)
                 {
                     q.add(curr.left);
                 }
@@ -54,7 +47,6 @@ class Solution {
                     q.add(curr.right);
                 }
             }
-            level++;
         }
 
         return ans;
