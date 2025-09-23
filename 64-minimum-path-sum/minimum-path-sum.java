@@ -1,38 +1,45 @@
 class Solution {
+
+    public static int helper(int row,int col,int[][]dp,int[][]grid)
+    {
+        if(row < 0 || col < 0)
+        {
+            return Integer.MAX_VALUE;
+        }
+
+        if(row == 0 && col == 0)
+        {
+            return grid[0][0];
+        }
+
+        if(dp[row][col] != -1)
+        {
+            return dp[row][col];
+        }
+
+        int left = helper(row-1,col,dp,grid);
+        int top = helper(row,col-1,dp,grid);
+
+        // int dp[row][col] = Math.min(left,top);
+
+        return dp[row][col] =grid[row][col] + Math.min(left,top);
+    }
     public int minPathSum(int[][] grid) {
 
-        int m = grid.length;
-        int n = grid[0].length;        
+        int n = grid.length;
+        int m = grid[0].length;
 
-        // initialize DP array
-        int dp[][] = new int[m][n];
-
-        dp[0][0] = grid[0][0];
-
-
-        // 0th row initialize
-        for(int i=1;i<n;i++)
+        int dp[][] = new int[n][m];
+        for(int[]d : dp)
         {
-            dp[0][i] = dp[0][i-1] + grid[0][i];
+            Arrays.fill(d,-1);
         }
 
-        // 0th column initialize
-         for(int j=1;j<m;j++)
-        {
-            dp[j][0] = dp[j-1][0] + grid[j][0];
-        }
+        int row = n-1;
+        int col = m-1;
 
-
-
-        // fill dp array
-        for(int i=1;i<m;i++)
-        {
-            for(int j=1;j<n;j++)
-            {
-                dp[i][j] = Math.min(dp[i][j-1],dp[i-1][j]) + grid[i][j];
-            }
-        }
-        return dp[m-1][n-1];
-        
+        return helper(row,col,dp,grid);
     }
 }
+
+
