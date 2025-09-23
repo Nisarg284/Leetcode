@@ -1,29 +1,29 @@
 class Solution {
 
-    public static int countPaths(int m, int n, int[][] memo) {
-        if (m < 0 || n < 0) {
+    public int helper(int row,int col,int[][]dp)
+    {
+        if(row < 0 || col < 0)
+        {
             return 0;
         }
-        if (m == 0 || n == 0) {
+
+        if(row == 1 && col == 1)
+        {
             return 1;
         }
-        if (memo[m][n] != 0) {
-            return memo[m][n];
+
+        if(dp[row][col] != 0)
+        {
+            return dp[row][col];
         }
-        int up = countPaths(m - 1, n, memo);
-        int left = countPaths(m, n - 1, memo);
-        
-        memo[m][n] = up + left;
-        return memo[m][n];
+
+        return dp[row][col] =  helper(row-1,col,dp) + helper(row,col-1,dp);
+
     }
+    public int uniquePaths(int row, int col) {
 
-    public int uniquePaths(int m, int n) {
-
-        // if (m <= 0 || n <= 0) {
-        //     return 0;
-        // }
-        int[][] memo = new int[m][n];
-        return countPaths(m - 1, n - 1, memo);
-
+        int[][]dp = new int[row+1][col+1]; 
+        return helper(row,col,dp);
+        
     }
 }
