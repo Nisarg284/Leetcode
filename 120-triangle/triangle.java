@@ -1,5 +1,4 @@
 class Solution {
-
     public static int helper(int row,int col,List<List<Integer>> triangle,int[][]dp,int n)
     {
         if(row == n-1)
@@ -12,22 +11,21 @@ class Solution {
             return dp[row][col];
         }
 
-        return dp[row][col] = triangle.get(row).get(col) + Math.min(helper(row+1,col,triangle,dp,n),helper(row+1,col+1,triangle,dp,n));
+        int down = helper(row+1,col,triangle,dp,n);
+        int bottomRightDiagonal = helper(row+1,col+1,triangle,dp,n);
+        int currVal = triangle.get(row).get(col);
+
+        return dp[row][col] = currVal + Math.min(down,bottomRightDiagonal);
     }
     public int minimumTotal(List<List<Integer>> triangle) {
-
         int n = triangle.size();
-
         int row = 0;
         int col = 0;
-
         int[][]dp = new int[n][n];
-
         for(int[]d : dp)
         {
             Arrays.fill(d,Integer.MAX_VALUE);
         }
         return helper(row,col,triangle,dp,n);
-        
     }
 }
