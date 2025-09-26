@@ -22,7 +22,7 @@ class Solution {
     }
     public int minInsertions(String s) {
         int n = s.length();
-        int[][] dp = new int[501][501];
+        int[][] dp = new int[n+1][n+1];
         return helper(0,n-1,dp,s);
         
     }
