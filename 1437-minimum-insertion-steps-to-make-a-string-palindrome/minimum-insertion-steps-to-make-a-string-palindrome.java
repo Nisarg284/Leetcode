@@ -1,57 +1,32 @@
 class Solution {
 
-    public static int helper(String s,int i,int j,int[][]dp)
+    public static int helper(int start,int end,int[][]dp,String str)
     {
-        if(i >= j)
+        if(start >= end)
         {
             return 0;
         }
 
-        if(dp[i][j] != 0)
+        if(dp[start][end] != 0)
         {
-            return dp[i][j];
+            return dp[start][end];
         }
 
-        if(s.charAt(i) == s.charAt(j))
+        if(str.charAt(start) == str.charAt(end))
         {
-            return dp[i][j] = helper(s,i+1,j-1,dp);
+            return helper(start+1,end-1,dp,str);
         }
 
-        return dp[i][j] = 1 + Math.min(helper(s,i+1,j,dp),helper(s,i,j-1,dp));
-
-        // return 1 + Math.min(helper(s, i + 1, j), helper(s, i, j - 1));
+        return dp[start][end] =1 + Math.min( helper(start+1,end,dp,str), helper(start,end-1,dp,str));
     }
     public int minInsertions(String s) {
 
-        int i = 0;
-        int j = s.length()-1;
 
-        int[][]dp = new int[501][501];
+        int n = s.length();
 
-        return helper(s,i,j,dp);
+        int[][] dp = new int[501][501];
+
+        return helper(0,n-1,dp,s);
         
     }
 }
-
-
-
-// class Solution {
-
-//     public static int helper(String s, int i, int j) {
-//         if (i >= j) {
-//             return 0;
-//         }
-
-//         if (s.charAt(i) == s.charAt(j)) {
-//             return helper(s, i + 1, j - 1);
-//         }
-
-//         return 1 + Math.min(helper(s, i + 1, j), helper(s, i, j - 1)); // FIXED: changed j+1 to j-1
-//     }
-
-//     public int minInsertions(String s) {
-//         int i = 0;
-//         int j = s.length() - 1;
-//         return helper(s, i, j);
-//     }
-// }
