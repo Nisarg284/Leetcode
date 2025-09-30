@@ -15,31 +15,26 @@
  */
 class Solution {
 
-    public static void helper(TreeNode root,int sum,ArrayList<Integer>ans)
+    public static void helper(TreeNode root,int currSum,int[]totalSum)
     {
         if(root == null)
         {
             return;
         }
 
+        int curr = (currSum * 10) + root.val;
+        // System.out.println(curr);
+
         if(root.left == null && root.right == null)
         {
-            ans.add(sum * 10 + root.val);
+            totalSum[0] += curr;
             return;
         }
 
-        // if(root.left == null)
-        // {
-        //     ans.add(sum + root.val);
-        // }else if(root.right == null)
-        // {
-        //     ans.add(sum + root.val);
-        // }
-
-        helper(root.left,sum*10 + root.val,ans);
-        helper(root.right,sum * 10 +root.val,ans);
-
+        helper(root.left,curr,totalSum);
+        helper(root.right,curr,totalSum);
     }
+
     public int sumNumbers(TreeNode root) {
 
         if(root == null)
@@ -47,22 +42,10 @@ class Solution {
             return 0;
         }
 
-        int sum = 0;
-        ArrayList<Integer> ans = new ArrayList<>();
+        int[] ans = new int[1];
 
-        helper(root,sum,ans);
+        helper(root,0,ans);
 
-        int result = 0;
-
-        for(int i:ans)
-        {
-            result+= i;
-        }
-
-
-
-        return result;
-          
-        
+        return ans[0];
     }
 }
