@@ -13,17 +13,17 @@ class Solution {
             dp[0][i] = 1;
         }
 
-        for(int[]i : dp)
-        {
+        // for(int[]i : dp)
+        // {
 
-            for(int j : i)
-            {
-                System.out.print(j+" ");
-            }
-            System.out.println();
-        }
+        //     for(int j : i)
+        //     {
+        //         System.out.print(j+" ");
+        //     }
+        //     System.out.println();
+        // }
 
-        System.out.println("-------------------------------------");
+        // System.out.println("-------------------------------------");
 
 
 
@@ -38,15 +38,15 @@ class Solution {
             }
         }
 
-        for(int[]i : dp)
-        {
+        // for(int[]i : dp)
+        // {
 
-            for(int j : i)
-            {
-                System.out.print(j+" ");
-            }
-            System.out.println();
-        }
+        //     for(int j : i)
+        //     {
+        //         System.out.print(j+" ");
+        //     }
+        //     System.out.println();
+        // }
 
         return dp[m-1][n-1];
 
