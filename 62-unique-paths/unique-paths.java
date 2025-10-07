@@ -1,29 +1,55 @@
 class Solution {
+    public int uniquePaths(int m, int n) {
 
-    public int helper(int row,int col,int[][]dp)
-    {
-        if(row < 0 || col < 0)
+        int[][] dp = new int[m][n];
+
+        for(int i = 0;i<m;i++)
         {
-            return 0;
+            dp[i][0] = 1;
         }
 
-        if(row == 1 && col == 1)
+        for(int i = 0;i<n;i++)
         {
-            return 1;
+            dp[0][i] = 1;
         }
 
-        if(dp[row][col] != 0)
+        for(int[]i : dp)
         {
-            return dp[row][col];
+
+            for(int j : i)
+            {
+                System.out.print(j+" ");
+            }
+            System.out.println();
         }
 
-        return dp[row][col] =  helper(row-1,col,dp) + helper(row,col-1,dp);
+        System.out.println("-------------------------------------");
 
-    }
-    public int uniquePaths(int row, int col) {
 
-        int[][]dp = new int[row+1][col+1]; 
-        return helper(row,col,dp);
+
+        for(int i = 1;i<m;i++)
+        {
+            for(int j = 1;j<n;j++)
+            {
+                int top = dp[i-1][j];
+                int left = dp[i][j-1];
+
+                dp[i][j] =  top + left;
+            }
+        }
+
+        for(int[]i : dp)
+        {
+
+            for(int j : i)
+            {
+                System.out.print(j+" ");
+            }
+            System.out.println();
+        }
+
+        return dp[m-1][n-1];
+
         
     }
 }
