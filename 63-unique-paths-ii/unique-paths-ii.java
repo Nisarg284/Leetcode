@@ -1,44 +1,78 @@
 class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
 
-    public static int helper(int[][]arr,int row,int col,int[][]memo)
-    {
-        if(row < 0 || col < 0 || arr[row][col] == 1)
+        if(obstacleGrid[0][0] == 1)
         {
             return 0;
         }
 
-        if(row == 0 && col == 0)
+        int n = obstacleGrid.length;
+        int m = obstacleGrid[0].length;
+
+        int dp[][] = new int[n][m];
+
+
+        // int flag = true;
+        for(int i = 0;i<n;i++)
         {
-            return 1;
+            if(obstacleGrid[i][0] != 1 )
+            {
+                dp[i][0] = 1;
+            }else{
+                break;
+            }
         }
 
-        if(memo[row][col] != 0)
+        // flag = true;
+
+        for(int i = 0;i<m;i++)
         {
-            return memo[row][col];
+            if(obstacleGrid[0][i] != 1)
+            {
+                dp[0][i] = 1;
+            }else{
+                break;
+            }
         }
 
 
-        int left = helper(arr,row,col-1,memo);
-        int up = helper(arr,row-1,col,memo);
+        for(int[]arr : dp)
+        {
+            for(int i : arr)
+            {
+                System.out.print(i+" ");
+            }
+            System.out.println();
+        }
 
-        memo[row][col] = left + up;
+        System.out.println("-----------------------");
 
-        return memo[row][col];
+        for(int i = 1;i<n;i++)
+        {
+            for(int j = 1;j<m;j++)
+            {
+                if(obstacleGrid[i][j] == 1)
+                {
+                    continue;
+                }
 
-    }
-    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+                int top = dp[i-1][j];
+                int left = dp[i][j-1];
 
+                dp[i][j] = top + left;
+            }
+        }
 
-        int m = obstacleGrid.length;
-        int n = obstacleGrid[0].length;
+        for(int[]arr : dp)
+        {
+            for(int i : arr)
+            {
+                System.out.print(i+" ");
+            }
+            System.out.println();
+        }
 
-        
-        int[][] memo = new int[m][n];
-
-        int row = m-1;
-        int col = n-1;
-
-        return helper(obstacleGrid,row,col,memo);
+        return dp[n-1][m-1];
         
     }
 }
