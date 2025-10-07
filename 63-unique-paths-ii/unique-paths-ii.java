@@ -36,16 +36,16 @@ class Solution {
         }
 
 
-        for(int[]arr : dp)
-        {
-            for(int i : arr)
-            {
-                System.out.print(i+" ");
-            }
-            System.out.println();
-        }
+        // for(int[]arr : dp)
+        // {
+        //     for(int i : arr)
+        //     {
+        //         System.out.print(i+" ");
+        //     }
+        //     System.out.println();
+        // }
 
-        System.out.println("-----------------------");
+        // System.out.println("-----------------------");
 
         for(int i = 1;i<n;i++)
         {
@@ -63,14 +63,14 @@ class Solution {
             }
         }
 
-        for(int[]arr : dp)
-        {
-            for(int i : arr)
-            {
-                System.out.print(i+" ");
-            }
-            System.out.println();
-        }
+        // for(int[]arr : dp)
+        // {
+        //     for(int i : arr)
+        //     {
+        //         System.out.print(i+" ");
+        //     }
+        //     System.out.println();
+        // }
 
         return dp[n-1][m-1];
         
