@@ -17,11 +17,19 @@ class Solution {
             return dp[row][col];
         }
 
-        int top = helper(row-1,col,dp,matrix,n);
-        int leftTopDiagonal = helper(row-1,col-1,dp,matrix,n);
-        int rightTopDiagonal = helper(row-1,col+1,dp,matrix,n);
+        int minVal = Integer.MAX_VALUE;
 
-        return dp[row][col] = matrix[row][col] + Math.min(top,Math.min(leftTopDiagonal,rightTopDiagonal));
+        for(int i = -1;i<=1;i++)
+        {
+            minVal = Math.min(minVal , helper(row-1,col+i,dp,matrix,n));
+        }
+
+        // int top = helper(row-1,col,dp,matrix,n);
+        // int leftTopDiagonal = helper(row-1,col-1,dp,matrix,n);
+        // int rightTopDiagonal = helper(row-1,col+1,dp,matrix,n);
+
+        // return dp[row][col] = matrix[row][col] + Math.min(top,Math.min(leftTopDiagonal,rightTopDiagonal));
+        return dp[row][col] = matrix[row][col] + minVal;
     }
     public int minFallingPathSum(int[][] matrix) {
 
