@@ -1,45 +1,60 @@
 class Solution {
-
-    public static int helper(int row,int col,int[][]dp,int[][]grid)
-    {
-        if(row < 0 || col < 0)
-        {
-            return Integer.MAX_VALUE;
-        }
-
-        if(row == 0 && col == 0)
-        {
-            return grid[0][0];
-        }
-
-        if(dp[row][col] != -1)
-        {
-            return dp[row][col];
-        }
-
-        int left = helper(row-1,col,dp,grid);
-        int top = helper(row,col-1,dp,grid);
-
-        // int dp[row][col] = Math.min(left,top);
-
-        return dp[row][col] =grid[row][col] + Math.min(left,top);
-    }
     public int minPathSum(int[][] grid) {
-
+        
         int n = grid.length;
         int m = grid[0].length;
 
-        int dp[][] = new int[n][m];
-        for(int[]d : dp)
+        int[][]dp = new int[n][m];
+        dp[0][0] = grid[0][0];
+
+        // for first col
+        for(int i = 1;i<n;i++)
         {
-            Arrays.fill(d,-1);
+            dp[i][0] = grid[i][0] + dp[i-1][0];
         }
 
-        int row = n-1;
-        int col = m-1;
+        // for first row
+        for(int i = 1;i<m;i++)
+        {
+            dp[0][i] = grid[0][i] + dp[0][i-1];
+        }
 
-        return helper(row,col,dp,grid);
+        // for(int arr[] : dp)
+        // {
+        //     for(int i: arr)
+        //     {
+        //         System.out.print(i+" ");
+        //     }
+        //     System.out.println();
+        // }
+
+        // System.out.println("------------------------");
+
+
+        for(int i = 1;i<n;i++)
+        {
+            for(int j = 1;j<m;j++)
+            {
+                int top = dp[i-1][j];
+                int left = dp[i][j-1];
+
+                dp[i][j] = grid[i][j] + Math.min(top,left);
+            }
+        }
+
+
+        // for(int arr[] : dp)
+        // {
+        //     for(int i: arr)
+        //     {
+        //         System.out.print(i+" ");
+        //     }
+        //     System.out.println();
+        // }
+
+        return dp[n-1][m-1];
+
+        
+        
     }
 }
-
-
