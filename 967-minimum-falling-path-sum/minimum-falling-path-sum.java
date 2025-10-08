@@ -31,14 +31,14 @@ class Solution {
 
         // System.out.println(minVal);
 
-        for(int[]arr : dp)
-        {
-            for(int i : arr)
-            {
-                System.out.print(i+" ");
-            }
-            System.out.println();
-        }
+        // for(int[]arr : dp)
+        // {
+        //     for(int i : arr)
+        //     {
+        //         System.out.print(i+" ");
+        //     }
+        //     System.out.println();
+        // }
 
         for(int i = 1;i<n;i++)
         {
