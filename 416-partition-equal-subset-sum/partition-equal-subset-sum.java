@@ -37,19 +37,76 @@ class Solution {
                 dp[i][j] = take || skip;
             }
         }
+        return dp[n][target]; 
+    }
 
-        return dp[n][target];
+    public static boolean canPartitionMemo(int[]arr,int n)
+    {
+        int sum = 0;
+        for(int val : arr)
+        {
+            sum += val;
+        }
 
-        
+        if(sum % 2 != 0)
+        {
+            return false;
+        }
+
+
+        int target = sum / 2;
+
+        int[][]dp = new int[n][target+1];
+        for(int[] a : dp)
+        {
+            Arrays.fill(a,-1);
+        }
+
+        int ans  = helper(n-1,target,arr,dp);
+        return ans == 1;
+    }
+
+    public static int helper(int idx,int target,int[]arr,int[][]dp)
+    {
+        if(target < 0)
+        {
+            return 0;
+        }
+
+        if(idx < 0)
+        {
+            return 0;
+        }
+
+        if(arr[idx] == target)
+        {
+            return 1;
+        }
+
+        if(dp[idx][target] != -1)
+        {
+            return dp[idx][target];
+        }
+
+        int take = 0;
+        int skip = helper(idx-1,target,arr,dp);
+
+        if(arr[idx] <= target)
+        {
+            take = helper(idx-1,target - arr[idx],arr,dp);
+        }
+
+        if(take == 1 || skip == 1)
+        {
+            return dp[idx][target] = 1;
+        }
+
+        return dp[idx][target] = 0;
     }
     public boolean canPartition(int[] nums) {
-
         int n = nums.length;
+        // return canPartitionTab(nums,n); 
 
-
-        return canPartitionTab(nums,n);
-        
-
-        
+        return canPartitionMemo(nums,n);
     }
 }
