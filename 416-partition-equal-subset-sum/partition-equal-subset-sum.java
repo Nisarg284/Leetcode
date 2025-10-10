@@ -1,51 +1,11 @@
 class Solution {
 
-    public static boolean helper(int[]nums,int idx,int n,int target,Boolean[][] memo)
+    public static boolean canPartitionTab(int[]arr,int n)
     {
-        if(idx == n)
-        {
-            return target == 0;
-        }
-
-        if(memo[idx][target] != null)
-        {
-            return memo[idx][target];
-        }
-
-        if(target == 0)
-        {
-            return true;
-        }
-
-        boolean exclude = helper(nums,idx+1,n,target,memo);
-        boolean include = false;
-
-
-        if(target >= nums[idx])
-        {
-            include = helper(nums,idx+1,n,target - nums[idx],memo);
-        }
-
-        // boolean include = helper(nums,idx+1,n,target - nums[idx],memo);
-        // boolean exclude = helper(nums,idx+1,n,target,memo);
-
-        memo[idx][target] = include || exclude;
-
-        return memo[idx][target];
-
-
-
-        // return include || exclude;
-    }
-
-    public boolean canPartition(int[] nums) {
-
-        int n = nums.length;
         int sum = 0;
-
         for(int i = 0;i<n;i++)
         {
-            sum+=nums[i];
+            sum += arr[i];
         }
 
         if(sum % 2 != 0)
@@ -53,15 +13,43 @@ class Solution {
             return false;
         }
 
+        int target = sum/2;
 
-        // Boolean[][] memo = new Boolean[n][target+1];
+        boolean[][]dp = new boolean[n+1][target+1];
 
-        int target = sum / 2;
+        for(int i = 0;i<=n;i++)
+        {
+            dp[i][0] = true;
+        }
 
-        Boolean[][] memo = new Boolean[n][target+1];
+        for(int i = 1;i<=n;i++)
+        {
+            for(int j = 1;j<=target;j++)
+            {
+                boolean take = false;
+                boolean skip = dp[i-1][j];
+
+                if(j>=arr[i-1])
+                {
+                    take = dp[i-1][j - arr[i-1]];
+                }
+
+                dp[i][j] = take || skip;
+            }
+        }
+
+        return dp[n][target];
+
+        
+    }
+    public boolean canPartition(int[] nums) {
+
+        int n = nums.length;
 
 
-        return helper(nums,0,n,target,memo);
+        return canPartitionTab(nums,n);
+        
+
         
     }
 }
