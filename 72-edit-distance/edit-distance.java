@@ -1,53 +1,57 @@
 class Solution {
+
+    public static int helper(int n,int m,String s1,String s2,int[][]dp)
+    {
+        
+        if(m < 0)
+        {
+            return n+1;
+        }
+
+        if(n < 0)
+        {
+            return m+1;
+        }
+
+        if(dp[n][m] != -1)
+        {
+            return dp[n][m];
+        }
+
+        if(s1.charAt(n) == s2.charAt(m))
+        {
+            return dp[n][m] = helper(n-1,m-1,s1,s2,dp);
+        }else{
+            int insert = helper(n,m-1,s1,s2,dp);
+            int delete = helper(n-1,m,s1,s2,dp);
+            int replace = helper(n-1,m-1,s1,s2,dp);
+
+            return dp[n][m] = 1 + Math.min(insert,Math.min(delete,replace));
+        }
+    }
     public int minDistance(String word1, String word2) {
 
-        // length of both string
         int n = word1.length();
         int m = word2.length();
 
-        // create new dp array
-        int[][] dp = new int[n+1][m+1];
+        int[][]dp = new int[n][m];
 
-        // initialize 0th row
-        for(int i=0;i<dp[0].length;i++)
+        for(int[]arr : dp)
         {
-            dp[0][i] = i;
+            Arrays.fill(arr,-1);
         }
+
+        // if(n==0)
+        // {
+        //     return m;
+        // }
+
+        // if(m == 0)
+        // {
+        //     return n;
+        // }
+
+        return helper(n-1,m-1,word1,word2,dp);
         
-         // initialize 0th column
-        for(int j=0;j<dp.length;j++)
-        {
-            dp[j][0] = j;
-        }
-
-
-        // fill remaining dp array
-        for(int i=1;i<dp.length;i++)
-        {
-            for(int j=1;j<dp[0].length;j++)
-            {
-                // if both characters are same
-                if(word1.charAt(i-1) == word2.charAt(j-1))
-                {
-                    dp[i][j] = dp[i-1][j-1];
-                }
-                else{
-                    // if both characters are not same
-
-                    // add
-                    int add = dp[i][j-1] + 1;
-
-                    // delete
-                    int delete = dp[i-1][j] + 1;
-
-                    //replace
-                    int replace = dp[i-1][j-1] + 1;
-
-                    dp[i][j] = Math.min(add,Math.min(delete,replace));
-                }
-            }
-        }
-
-        return dp[n][m];
     }
 }
