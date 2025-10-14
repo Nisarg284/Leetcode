@@ -1,52 +1,45 @@
 class Solution {
 
-    public static int helper(int i,int j,String s,String t,int[][]dp)
+    public static int helper(int n,int m,String s,String t,int[][]dp)
     {
-        if(j==0)
+        if(m < 0)
         {
             return 1;
         }
-        if(i == 0){
+
+        if(n < 0)
+        {
             return 0;
         }
 
-        // if(i == 0 && m == 0)
-        if(dp[i][j] != -1)
+        if(dp[n][m] != -1)
         {
-            return dp[i][j];
+            return dp[n][m];
         }
 
-        char currSChar = s.charAt(i-1);
-        char currTChar = t.charAt(j-1);
+        int take = helper(n-1,m-1,s,t,dp);
+        int skip = helper(n-1,m,s,t,dp);
 
-        int take = helper(i-1,j-1,s,t,dp);
-        int skip = helper(i-1,j,s,t,dp);
-
-        if(currSChar == currTChar)
+        if(s.charAt(n) == t.charAt(m))
         {
-            dp[i][j] = take + skip;
-        }else{
-            dp[i][j] = skip;
+            return dp[n][m] = take + skip;
         }
 
-        return dp[i][j];
+        return dp[n][m] = skip;
     }
     public int numDistinct(String s, String t) {
 
         int n = s.length();
         int m = t.length();
 
-        int[][] dp = new int[n+1][m+1];
+        int[][]dp = new int[n][m];
 
-        for(int[] d : dp)
+        for(int[]arr : dp)
         {
-            Arrays.fill(d,-1);
+            Arrays.fill(arr,-1);
         }
-        
 
-
-        return helper(n,m,s,t,dp);
-
+        return helper(n-1,m-1,s,t,dp);
         
     }
 }
