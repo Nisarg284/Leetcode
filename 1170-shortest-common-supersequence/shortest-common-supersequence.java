@@ -1,8 +1,7 @@
 class Solution {
-    public String shortestCommonSupersequence(String s1, String s2) {
-
-        int n = s1.length();
-        int m = s2.length();
+    public String shortestCommonSupersequence(String s, String t) {
+        int n = s.length();
+        int m = t.length();
 
         int[][]dp = new int[n+1][m+1];
 
@@ -10,7 +9,7 @@ class Solution {
         {
             for(int j = 1;j<=m;j++)
             {
-                if(s1.charAt(i-1) == s2.charAt(j-1))
+                if(s.charAt(i-1) == t.charAt(j-1))
                 {
                     dp[i][j] = 1 + dp[i-1][j-1];
                 }else{
@@ -19,41 +18,44 @@ class Solution {
             }
         }
 
+        System.out.println("ans ---> "+dp[n][m]);
+
         int i = n;
         int j = m;
 
         StringBuilder sb = new StringBuilder();
 
-        while(i > 0 && j > 0)
+        while (i > 0 && j > 0)
         {
-            if(s1.charAt(i-1) == s2.charAt(j-1))
+            if(s.charAt(i-1) == t.charAt(j-1))
             {
-                sb.append(s1.charAt(i-1));
+                sb.append(s.charAt(i-1));
                 i--;
                 j--;
-            }else if(dp[i][j-1] >= dp[i-1][j]){
-                sb.append(s2.charAt(j-1));
+            }else if(dp[i][j-1] >= dp[i-1][j])
+            {
+                sb.append(t.charAt(j-1));
                 j--;
             }else{
-                sb.append(s1.charAt(i-1));
+                sb.append(s.charAt(i-1));
                 i--;
             }
         }
 
 
-        while( i > 0)
+        while (i > 0)
         {
-            sb.append(s1.charAt(i-1));
+            sb.append(s.charAt(i-1));
             i--;
         }
 
-        while(j>0)
+        while (j > 0)
         {
-            sb.append(s2.charAt(j-1));
+            sb.append(t.charAt(j-1));
             j--;
         }
 
         return sb.reverse().toString();
-        
+
     }
 }
