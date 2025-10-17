@@ -1,39 +1,25 @@
 class Solution {
     public int maxProfit(int[] prices) {
+
         int n = prices.length;
 
-        boolean isBuy = false;
-        int maxProfit = 0;
-        int buyingPrice = -1;
+        int buy = 0;
+        int sell = 1;
 
-        // now iterate over the prices[] array
-        for(int i=0; i<n-1;i++)
+        int profit = 0;
+
+        while(sell < n)
         {
-            int j = i+1;
-
-            // Buying Condition
-            if(prices[i] < prices[j] && !isBuy)
+            if(prices[sell] > prices[buy])
             {
-                buyingPrice = prices[i];
-                isBuy = true;
+                profit += prices[sell] - prices[buy];
             }
 
-            // Selling Condition
-            if(prices[i] > prices[j] && isBuy)
-            {
-                int currentProfit = prices[i] - buyingPrice;
-                maxProfit += currentProfit;
-                buyingPrice = -1;
-                isBuy = false;
-            }
+            buy = sell;
+            sell++;
         }
 
-        if(isBuy)
-        {
-            maxProfit += prices[n-1] - buyingPrice;
-        }
-
-        return maxProfit;
+        return profit;
         
     }
 }
