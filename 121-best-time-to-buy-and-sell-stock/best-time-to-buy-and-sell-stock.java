@@ -1,32 +1,29 @@
 class Solution {
     public int maxProfit(int[] prices) {
 
+        int n = prices.length;
 
         int buy = 0;
         int sell = 1;
 
-
-        int maxProfit = 0;
-        int n = prices.length;
-         int currProfit = 0;
+        int maxProf = 0;
 
         while(sell < n)
         {
             if(prices[sell] > prices[buy])
             {
-                currProfit = prices[sell] - prices[buy];
-                maxProfit = Math.max(currProfit,maxProfit);
-                // sell++;
-            }else{
+                int currProfit = prices[sell] - prices[buy];
 
-                buy  = sell;
-                // buy++;
+                System.out.println("prices ----> "+ prices[sell]);
+
+                maxProf = Math.max(maxProf,currProfit);
+            }else{
+                buy = sell;
             }
             sell++;
-            // maxProfit = Math.max(currProfit,maxProfit);
         }
 
-        return maxProfit;
+        return maxProf;
         
     }
 }
