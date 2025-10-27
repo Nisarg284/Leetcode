@@ -1,31 +1,63 @@
 class Solution {
-    public static int helper(int row,int col,List<List<Integer>> triangle,int[][]dp,int n)
-    {
-        if(row == n-1)
-        {
-            return triangle.get(row).get(col);
-        }
-
-        if(dp[row][col] != Integer.MAX_VALUE)
-        {
-            return dp[row][col];
-        }
-
-        int down = helper(row+1,col,triangle,dp,n);
-        int bottomRightDiagonal = helper(row+1,col+1,triangle,dp,n);
-        int currVal = triangle.get(row).get(col);
-
-        return dp[row][col] = currVal + Math.min(down,bottomRightDiagonal);
-    }
     public int minimumTotal(List<List<Integer>> triangle) {
+
         int n = triangle.size();
-        int row = 0;
-        int col = 0;
-        int[][]dp = new int[n][n];
-        for(int[]d : dp)
+
+        int[][] dp = new int[n][n];
+
+        for(int[]arr : dp)
         {
-            Arrays.fill(d,Integer.MAX_VALUE);
+            Arrays.fill(arr,Integer.MAX_VALUE);
         }
-        return helper(row,col,triangle,dp,n);
+
+        dp[0][0] = triangle.get(0).get(0);
+        for(int  i = 1;i<n;i++)
+        {
+            dp[i][0] = triangle.get(i).get(0) + dp[i-1][0];
+        }
+
+
+        // for(int[]arr : dp)
+        // {
+        //     for(int i : arr)
+        //     {
+        //         System.out.print(i+" ");
+        //     }
+        //     System.out.println();
+        // }
+
+        // System.out.println("-------------------------");
+
+        for(int i = 1;i<n;i++)
+        {
+            List<Integer> currList = triangle.get(i);
+            for(int j = 1;j<currList.size();j++)
+            {
+                int top = dp[i-1][j];
+                int leftTopDiagonal = dp[i-1][j-1];
+
+                dp[i][j] = currList.get(j) + Math.min(top,leftTopDiagonal);
+            }
+        }
+
+
+        // for(int[]arr : dp)
+        // {
+        //     for(int i : arr)
+        //     {
+        //         System.out.print(i+" ");
+        //     }
+        //     System.out.println();
+        // }
+
+        int ans = Integer.MAX_VALUE;
+        for(int i = 0;i<n;i++)
+        {
+            // System.out.println("ans ---> "+ dp[n-1][i]);
+            ans = Math.min(ans,dp[n-1][i]);
+        }
+
+        return ans;
+        
     }
 }
