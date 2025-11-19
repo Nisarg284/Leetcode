@@ -14,7 +14,7 @@ class Solution {
             {
                 int currProfit = prices[sell] - prices[buy];
 
-                System.out.println("prices ----> "+ prices[sell]);
+                // System.out.println("prices ----> "+ prices[sell]);
 
                 maxProf = Math.max(maxProf,currProfit);
             }else{
