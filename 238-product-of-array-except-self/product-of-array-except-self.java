@@ -1,41 +1,50 @@
 class Solution {
     public int[] productExceptSelf(int[] nums) {
 
-        int[] ans = new int[nums.length];
+        int zeroIdx = -1;
+        int zeroCount = 0;
+        int prefixProd = 1;
+        int withoutZeroProd = 1;
 
-        int mul = 1;
-        int zero = 0;
-
-        for(int i=0;i<nums.length;i++)
+        int n = nums.length;
+        for(int i = 0;i<n;i++)
         {
-            if(nums[i] != 0)
-            {
-                mul*=nums[i];
-            }
-
             if(nums[i] == 0)
             {
-                zero++;
-            }
-        }
-
-        for(int i=0;i<nums.length;i++)
-        {
-            if(zero > 1)
-            {
-                return ans;
-            }
-
-            if(zero == 1)
-            {
-                if(nums[i]==0)
+                if(zeroCount >= 1)
                 {
-                    ans[i] = mul;
+                    return new int[n];
+                }else
+                {
+                    zeroCount++;
+                    zeroIdx = i;
+                    withoutZeroProd = prefixProd;
+                    prefixProd = 0;
                 }
             }else{
-                ans[i] = mul/nums[i];
+                withoutZeroProd *= nums[i];
+                prefixProd *= nums[i];
+
             }
         }
+
+        int[]ans = new int[n];
+
+        for(int i = 0;i<n;i++)
+        {
+            if(i == zeroIdx)
+            {
+                ans[i] = withoutZeroProd;
+            }else if(zeroCount < 1)
+            {
+                ans[i] = prefixProd / nums[i];
+            }
+        }
+
+        System.out.println("zeroCount : "+zeroCount);
+        System.out.println("zeroIdx : "+zeroIdx);
+        System.out.println("withoutZeroProd : "+withoutZeroProd);
+        System.out.println("prefixProd : "+prefixProd);
 
         return ans;
         
