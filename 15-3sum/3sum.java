@@ -1,131 +1,54 @@
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
 
-        int n = nums.length;
         List<List<Integer>> ans = new ArrayList<>();
 
         Arrays.sort(nums);
-
+        int n = nums.length;
 
         for(int i = 0;i<n;i++)
         {
+            int first = nums[i];
 
             if(i > 0 && nums[i] == nums[i-1])
             {
                 continue;
             }
-            int start = i+1;
-            int end = n-1;
 
-            // System.out.println(" Outer ");
+            int second = i+1;
+            int third = n-1;
 
-            int target = -nums[i];
-
-            while( start < end)
+            while(second < third)
             {
-                // System.out.println(" inner ");
-                // while(start < n-1 && nums[start] == nums[start+1])
-                // {
-                //     System.out.println(" start ");
-                //     start++;
-                // }
+                int sum = first + nums[second] + nums[third];
 
-
-                // while( end > 0 && nums[end] == nums[end-1])
-                // {
-                //     System.out.println(" end ");
-                //     end--;
-                // }
-
-                // if(end >= start)
-                // {
-                //     break;
-                // }
-
-                int sum = nums[start] + nums[end];
-                if(sum == target)
+                if(sum == 0)
                 {
-                    List<Integer> miniAns = new ArrayList<>();
-                    miniAns.add(nums[i]);
-                    miniAns.add(nums[start]);
-                    miniAns.add(nums[end]);
-                    ans.add(miniAns);
-                    start++;
-                    end--;
-                    // break;
+                    ans.add(new ArrayList<>(List.of(first,nums[second],nums[third])));
+                    second++;
+                    third--;
 
 
-                    while(start < end && nums[start] == nums[start-1])
+                    while(second < third && nums[second] == nums[second-1])
                     {
-                        // System.out.println(" start ");
-                        start++;
+                        second++;
                     }
 
 
-                    while(start < end && nums[end] == nums[end+1])
+                    while(second < third && nums[third] == nums[third+1])
                     {
-                        // System.out.println(" end ");
-                        end--;
+                        third--;
                     }
-                }
-
-                else if(sum < target)
+                }else if(sum < 0)
                 {
-                    start++;
+                    second++;
                 }else{
-                    end--;
+                    third--;
                 }
             }
         }
-
 
         return ans;
         
     }
 }
-
-
-
-
-
-
-
-
-
-// class Solution {
-//     public List<List<Integer>> threeSum(int[] nums) {
-//         List<List<Integer>> ans = new ArrayList<>();
-//         Arrays.sort(nums);
-//         int n = nums.length;
-
-//         for (int i = 0; i < n; i++) {
-//             // Skip duplicates for i
-//             if (i > 0 && nums[i] == nums[i - 1]) continue;
-
-//             int target = -nums[i];
-//             int start = i + 1;
-//             int end = n - 1;
-
-//             while (start < end) {
-//                 int sum = nums[start] + nums[end];
-
-//                 if (sum == target) {
-//                     ans.add(Arrays.asList(nums[i], nums[start], nums[end]));
-
-//                     start++;
-//                     end--;
-
-//                     // Skip duplicates for start and end
-//                     while (start < end && nums[start] == nums[start - 1]) start++;
-//                     while (start < end && nums[end] == nums[end + 1]) end--;
-//                 } else if (sum < target) {
-//                     start++;
-//                 } else {
-//                     end--;
-//                 }
-//             }
-//         }
-
-//         return ans;
-//     }
-// }
