@@ -1,10 +1,10 @@
 class Solution {
 
-    public static int helper(int n,int[]memo)
+    public int helper(int n,int[]memo)
     {
-        if(n < 0)
+        if(n <= 2)
         {
-            return 0;
+            return n;
         }
 
         if(memo[n] != -1)
@@ -12,22 +12,14 @@ class Solution {
             return memo[n];
         }
 
-        int oneStep = helper(n-1,memo);
-        int twoStep = helper(n-2,memo);
-
-        
-
-        return memo[n] = oneStep + twoStep;
+        return memo[n] = helper(n-1,memo) + helper(n-2,memo); 
     }
     public int climbStairs(int n) {
 
-
         int[] memo = new int[n+1];
+
         Arrays.fill(memo,-1);
-        memo[0] = 1;
-        memo[1] = 1;
 
         return helper(n,memo);
-        
     }
 }
