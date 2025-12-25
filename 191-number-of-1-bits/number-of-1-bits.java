@@ -1,16 +1,24 @@
 class Solution {
     public int hammingWeight(int n) {
 
-        int count = 0;
 
-        for(int i = 0;i<32;i++)
+        int counter = 0;
+
+        while(n != 0)
         {
-            if(((n>>i)&1) == 1)
+            int bitMask = 1;
+
+            int lsb = (n & bitMask);
+
+            if(lsb == 1)
             {
-                count++;
+                counter++;
             }
+
+            n = n>>1;
         }
-        return count;
+
+        return counter;
         
     }
 }
