@@ -22,9 +22,15 @@ class Solution {
 
         int[] ans = new int[n+1];
 
-        for(int i = 0;i<=n;i++)
+        // for(int i = 0;i<=n;i++)
+        // {
+        //     ans[i] = bitCounter(i);
+        // }
+
+        for(int i = 1;i<=n;i++)
         {
-            ans[i] = bitCounter(i);
+            int prevAns = i >> 1;
+            ans[i] = ans[prevAns] + (i & 1);
         }
 
         return ans;
