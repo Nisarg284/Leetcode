@@ -1,6 +1,7 @@
 class Solution {
 
-    public static int helper(int i,int j,int[][]dp,String s1,String s2)
+
+    public int helper(int i,int j,String s1,String s2,int[][]dp)
     {
         if(i < 0 || j < 0)
         {
@@ -12,34 +13,32 @@ class Solution {
             return dp[i][j];
         }
 
-        int match = 0;
-        int skip = 0;
-
         if(s1.charAt(i) == s2.charAt(j))
         {
-            match = 1 + helper(i-1,j-1,dp,s1,s2);
-        }else{
-            int skipI = helper(i-1,j,dp,s1,s2);
-            int skipJ = helper(i,j-1,dp,s1,s2);
-
-            skip = Math.max(skipI,skipJ);
+            return dp[i][j] = 1 + helper(i-1,j-1,s1,s2,dp);
         }
 
-        return dp[i][j] = Math.max(match,skip);
-
+        return dp[i][j] = Math.max(helper(i-1,j,s1,s2,dp),helper(i,j-1,s1,s2,dp));
+        
     }
     public int longestCommonSubsequence(String text1, String text2) {
 
-        int m=text1.length();
-        int n=text2.length();
+        int n = text1.length();
+        int m = text2.length();
 
-        int[][] dp = new int[m+1][n+1];
+        int[][]dp = new int[n][m];
 
-        for(int[]arr : dp)
+        for(int[] d : dp)
         {
-            Arrays.fill(arr,-1);
+            Arrays.fill(d,-1);
         }
-        return helper(m-1,n-1,dp,text1,text2);
+
+        
+
+        int i = n-1;
+        int j = m-1;
+
+        return helper(i,j,text1,text2,dp);
         
     }
 }
