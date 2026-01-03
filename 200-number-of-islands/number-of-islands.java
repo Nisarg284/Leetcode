@@ -1,27 +1,27 @@
 class Solution {
 
-    public static void dfsHelper(char[][]grid,int row,int col,boolean[][]vis,int[][]dir,int n,int m)
+    public static void helper(char[][] grid,int row,int col,boolean[][]vis,int n,int m)
     {
-        vis[row][col] = true;
-
-        for(int[] d : dir)
+        if(row < 0 || row >= n || col < 0 || col >= m || grid[row][col] == '0' || vis[row][col])
         {
-            int newRow = row + d[0];
-            int newCol = col + d[1];
-
-            if( newRow >= 0 && newRow < n && newCol >= 0 && newCol < m && grid[newRow][newCol] != '0' && !vis[newRow][newCol])
-            {
-                dfsHelper(grid,newRow,newCol,vis,dir,n,m);
-            }
+            return;
         }
+
+
+        vis[row][col] = true;
+        helper(grid,row-1,col,vis,n,m);
+        helper(grid,row,col+1,vis,n,m);
+        helper(grid,row+1,col,vis,n,m);
+        helper(grid,row,col-1,vis,n,m);
+        // vis[row][col] = false;
+
     }
+
     public int numIslands(char[][] grid) {
 
         int n = grid.length;
         int m = grid[0].length;
-
         boolean[][] vis = new boolean[n][m];
-        int[][] dir = {{-1,0},{0,1},{1,0},{0,-1}};
 
         int count = 0;
 
@@ -32,7 +32,7 @@ class Solution {
                 if(grid[i][j] == '1' && !vis[i][j])
                 {
                     count++;
-                    dfsHelper(grid,i,j,vis,dir,n,m);
+                    helper(grid,i,j,vis,n,m);
                 }
             }
         }
