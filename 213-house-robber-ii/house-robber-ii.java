@@ -1,45 +1,45 @@
 class Solution {
 
-    public static int helper(int idx,int[]nums,int[]dp,int stop)
+
+    public int helper(int idx,int stopIdx,int[]nums,int[]dp)
     {
-        if(idx < stop)
+        if(idx < stopIdx)
         {
             return 0;
         }
 
-        if(idx == stop)
-        {
-            return nums[idx];
-        }
 
         if(dp[idx] != -1)
         {
             return dp[idx];
         }
 
-        int steal = nums[idx] + helper(idx-2,nums,dp,stop);
-        int skip = helper(idx-1,nums,dp,stop);
 
-        return dp[idx] = Math.max(steal,skip);
+        int take = nums[idx] + helper(idx-2,stopIdx,nums,dp);
+        int skip = helper(idx-1,stopIdx,nums,dp);
+
+
+        return dp[idx] = Math.max(take,skip);
     }
     public int rob(int[] nums) {
 
         int n = nums.length;
 
-        if(n == 1)
-        {
+        if(n==1){
             return nums[0];
         }
-        int[]dp = new int[n];
 
-        // int start = n-1;
-        int idx = n-1;
-        Arrays.fill(dp,-1);
-        int stealFromFirst = helper(idx,nums,dp,1);
+
+        int[] dp = new int[n];
 
         Arrays.fill(dp,-1);
-        int stealFromSecond = helper(idx-1,nums,dp,0);
+        int last = helper(n-1,1,nums,dp);
 
-        return Math.max(stealFromFirst,stealFromSecond);
+        Arrays.fill(dp,-1);
+        int secLast = helper(n-2,0,nums,dp);
+
+
+        return Math.max(last,secLast);
+        
     }
 }
