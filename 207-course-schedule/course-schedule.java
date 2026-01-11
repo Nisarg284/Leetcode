@@ -1,20 +1,21 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
 
-        HashMap<Integer,List<Integer>> graph = new HashMap<>();
-        int[] inDegree = new int[numCourses];
 
-        for(int[]pre : prerequisites)
+        Map<Integer,List<Integer>> graph = new HashMap<>();
+        int[]inDegree = new int[numCourses];
+
+        for(int[] node : prerequisites)
         {
-            int src = pre[1];
-            int dest = pre[0];
+            int src = node[0];
+            int dest = node[1];
 
-            graph.computeIfAbsent(src,key -> new ArrayList<>()).add(dest);
             inDegree[dest]++;
+            graph.computeIfAbsent(src, k -> new ArrayList<>()).add(dest);
         }
 
         Queue<Integer> q = new LinkedList<>();
-        for(int i = 0;i<inDegree.length;i++)
+        for(int i = 0;i<numCourses;i++)
         {
             if(inDegree[i] == 0)
             {
@@ -22,33 +23,36 @@ class Solution {
             }
         }
 
-        int count = 0;
+
+
+        int counter = 0;
+
+
         while(!q.isEmpty())
         {
+
             int size = q.size();
 
             for(int i = 0;i<size;i++)
             {
-                int src = q.remove();
-                count++;
+                counter++;
+                int currVal = q.remove();
+                List<Integer> neighbors = graph.get(currVal);
 
-                List<Integer> dest = graph.get(src);
-                if(dest == null)
+                if(neighbors != null)
                 {
-                    continue;
-                }
-
-                for(int d : dest)
-                {
-                    inDegree[d]--;
-                    if(inDegree[d] == 0)
+                    for(int neighbor : neighbors)
                     {
-                        q.add(d);
+                        inDegree[neighbor]--;
+                        if(inDegree[neighbor] == 0)
+                        {
+                            q.add(neighbor);
+                        }
                     }
                 }
             }
+
         }
-        return count == numCourses;
-        
+        return counter == numCourses;  
     }
 }
