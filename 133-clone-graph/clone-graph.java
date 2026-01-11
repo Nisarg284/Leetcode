@@ -19,23 +19,6 @@ class Node {
 */
 
 class Solution {
-
-    public static void dfsHelper(Node original,HashMap<Node,Node> map)
-    {
-        List<Node> dest = original.neighbors;
-
-        for(Node d:dest)
-        {
-            if(!map.containsKey(d))
-            {
-                Node newNode = new Node(d.val);
-                map.put(d,new Node(d.val));
-                dfsHelper(d,map);
-                // map.get(original).neighbors.add(newNode);
-            }
-            map.get(original).neighbors.add(map.get(d));
-        }
-    }
     public Node cloneGraph(Node node) {
 
         if(node == null)
@@ -44,13 +27,47 @@ class Solution {
         }
 
 
-        HashMap<Node,Node> map = new HashMap<>();
+        HashMap<Node,Node> graph = new HashMap<>();
+        Queue<Node> q = new LinkedList<>();
+        // boolean[] vis = new boolean[101];
 
-        map.put(node,new Node(node.val));
+        graph.put(node,new Node(node.val));
+        // vis[node.val] = true;
 
-        dfsHelper(node,map);
+        q.add(node);
 
-        return map.get(node);
+        while(!q.isEmpty())
+        {
+            int size = q.size();
+
+            for(int i = 0;i<size;i++)
+            {
+                Node curr = q.remove();
+                Node copyNode = graph.get(curr);
+
+                List<Node> neighbors = curr.neighbors;
+
+                for(Node neighbor : neighbors)
+                {
+                    // copyNode.neighbors.add(new Node(neighbor.val));
+
+                    if(!graph.containsKey(neighbor))
+                    {
+                        q.add(neighbor);
+                        graph.put(neighbor,new Node(neighbor.val));
+                    }
+
+                    copyNode.neighbors.add(graph.get(neighbor));
+                }
+            }
+        }
+
+
+        return graph.get(node);
+
+
+
+
         
     }
 }
