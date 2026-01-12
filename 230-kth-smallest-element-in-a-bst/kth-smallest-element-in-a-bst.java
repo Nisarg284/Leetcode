@@ -15,36 +15,49 @@
  */
 class Solution {
 
-    public static void helper(TreeNode root, int k,PriorityQueue<Integer> pq)
+
+    public void inorderHelper(TreeNode root,int[]kth,int[]ans)
     {
         if(root == null)
         {
             return;
         }
 
-        pq.add(root.val);
-        if(pq.size() > k)
+        if(ans[0]!=-1)
         {
-            pq.remove();
+            return;
         }
 
-        helper(root.left,k,pq);
-        helper(root.right,k,pq);
+
+        inorderHelper(root.left,kth,ans);
+
+        // System.out.print(root.val+" ---> ");
+        
+        // // else{
+            kth[0]--;
+        // // }
+
+        if(kth[0] == 0)
+        {
+            ans[0] = root.val;
+            // return;
+        }
+        inorderHelper(root.right,kth,ans);
+
+        
     }
     public int kthSmallest(TreeNode root, int k) {
 
-        if(root == null)
-        {
-            return 0;
-        }
 
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)-> b-a);
-        pq.add(root.val);
-        helper(root.left,k,pq);
-        helper(root.right,k,pq);
 
-        return pq.peek();
+
+        int[] ans = {-1};
+        int[] kth = {k};
+        inorderHelper(root,kth,ans);
+
+
+        return ans[0];
         
     }
 }
