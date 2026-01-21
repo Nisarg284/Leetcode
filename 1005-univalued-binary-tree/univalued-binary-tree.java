@@ -21,21 +21,12 @@ class Solution {
             return true;
         }
 
-        if(root.left != null && root.val!= root.left.val)
+        if((root.left != null && root.val != root.left.val) || (root.right != null && root.val != root.right.val))
         {
             return false;
         }
 
-        if(root.right != null && root.val!= root.right.val)
-        {
-            return false;
-        }
-
-        boolean left = isUnivalTree(root.left);
-        boolean right = isUnivalTree(root.right);
-
-        return left && right;
-
+        return isUnivalTree(root.left) && isUnivalTree(root.right);
         
     }
 }
