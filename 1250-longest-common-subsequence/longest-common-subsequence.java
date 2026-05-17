@@ -1,44 +1,41 @@
 class Solution {
 
-
-    public int helper(int i,int j,String s1,String s2,int[][]dp)
-    {
-        if(i < 0 || j < 0)
-        {
+    public static int helper(int n,int m,String str1,String str2,int[][]dp){
+        if(n < 0 || m < 0){
             return 0;
         }
 
-        if(dp[i][j] != -1)
-        {
-            return dp[i][j];
+        if(dp[n][m] != -1){
+            return dp[n][m];
         }
 
-        if(s1.charAt(i) == s2.charAt(j))
-        {
-            return dp[i][j] = 1 + helper(i-1,j-1,s1,s2,dp);
+        int match = 0;
+        int misMatch = 0;
+
+        if(str1.charAt(n) == str2.charAt(m)){
+            match = 1 + helper(n-1,m-1,str1,str2,dp);
+        }else{
+            misMatch = Math.max(helper(n-1,m,str1,str2,dp) , helper(n,m-1,str1,str2,dp));
         }
 
-        return dp[i][j] = Math.max(helper(i-1,j,s1,s2,dp),helper(i,j-1,s1,s2,dp));
-        
+        return dp[n][m] = Math.max(match,misMatch);
     }
     public int longestCommonSubsequence(String text1, String text2) {
+
+        if(text1.isEmpty() || text2.isEmpty()){
+            return 0;
+        }
 
         int n = text1.length();
         int m = text2.length();
 
         int[][]dp = new int[n][m];
 
-        for(int[] d : dp)
-        {
-            Arrays.fill(d,-1);
+        for(int[]arr : dp){
+            Arrays.fill(arr,-1);
         }
 
-        
-
-        int i = n-1;
-        int j = m-1;
-
-        return helper(i,j,text1,text2,dp);
+        return helper(n-1,m-1,text1,text2,dp);
         
     }
 }
