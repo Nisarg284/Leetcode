@@ -1,112 +1,52 @@
 class Solution {
 
-    public static boolean canPartitionTab(int[]arr,int n)
-    {
-        int sum = 0;
-        for(int i = 0;i<n;i++)
-        {
-            sum += arr[i];
-        }
 
-        if(sum % 2 != 0)
-        {
+    public static boolean helper(int idx,int targetSum,int[]arr,Boolean[][]dp){
+        if(idx < 0){
             return false;
         }
 
-        int target = sum/2;
-
-        boolean[][]dp = new boolean[n+1][target+1];
-
-        for(int i = 0;i<=n;i++)
-        {
-            dp[i][0] = true;
+        if(targetSum == 0){
+            return true;
         }
 
-        for(int i = 1;i<=n;i++)
-        {
-            for(int j = 1;j<=target;j++)
-            {
-                boolean take = false;
-                boolean skip = dp[i-1][j];
-
-                if(j>=arr[i-1])
-                {
-                    take = dp[i-1][j - arr[i-1]];
-                }
-
-                dp[i][j] = take || skip;
-            }
-        }
-        return dp[n][target]; 
-    }
-
-    public static boolean canPartitionMemo(int[]arr,int n)
-    {
-        int sum = 0;
-        for(int val : arr)
-        {
-            sum += val;
+        if(dp[idx][targetSum] != null){
+            return dp[idx][targetSum];
         }
 
-        if(sum % 2 != 0)
-        {
-            return false;
+        boolean take = false;
+        boolean skip = false;
+
+        if(targetSum >= arr[idx]){
+            take = helper(idx-1,targetSum - arr[idx],arr,dp);
         }
 
+        skip = helper(idx-1,targetSum,arr,dp);
 
-        int target = sum / 2;
-
-        int[][]dp = new int[n][target+1];
-        for(int[] a : dp)
-        {
-            Arrays.fill(a,-1);
-        }
-
-        int ans  = helper(n-1,target,arr,dp);
-        return ans == 1;
-    }
-
-    public static int helper(int idx,int target,int[]arr,int[][]dp)
-    {
-        if(target < 0)
-        {
-            return 0;
-        }
-
-        if(idx < 0)
-        {
-            return 0;
-        }
-
-        if(arr[idx] == target)
-        {
-            return 1;
-        }
-
-        if(dp[idx][target] != -1)
-        {
-            return dp[idx][target];
-        }
-
-        int take = 0;
-        int skip = helper(idx-1,target,arr,dp);
-
-        if(arr[idx] <= target)
-        {
-            take = helper(idx-1,target - arr[idx],arr,dp);
-        }
-
-        if(take == 1 || skip == 1)
-        {
-            return dp[idx][target] = 1;
-        }
-
-        return dp[idx][target] = 0;
+        return dp[idx][targetSum] = take || skip;
     }
     public boolean canPartition(int[] nums) {
-        int n = nums.length;
-        // return canPartitionTab(nums,n); 
 
-        return canPartitionMemo(nums,n);
+        int n = nums.length;
+        int sum = 0;
+
+        for(int i : nums){
+            sum += i;
+        }
+
+        if(sum % 2 != 0){
+            return false;
+        }
+
+        int targetSum = sum / 2;
+
+        Boolean[][]dp = new Boolean[n][targetSum+1];
+
+        int idx = n-1;
+
+        return helper(idx,targetSum,nums,dp); 
+
+
+        
     }
 }
