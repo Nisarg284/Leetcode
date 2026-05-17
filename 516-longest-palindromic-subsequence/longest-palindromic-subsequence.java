@@ -1,42 +1,43 @@
 class Solution {
 
-    public static int helper(int i,int j,String s1,String s2,int[][]dp)
-    {
-        if(i < 0 || j < 0)
-        {
+    public static int helper(int i,int j,String s,int[][]dp){
+
+        if(i > j){
             return 0;
         }
+        if(i == j){
+            return 1;
+        }
 
-        if(dp[i][j] != -1)
-        {
+        if(dp[i][j] != -1){
             return dp[i][j];
         }
 
-        int take = 0;
-        int skip = 0;
+        int match = 0;
+        int misMatch = 0;
 
-        if(s1.charAt(i) == s2.charAt(j))
-        {
-            take = 1 + helper(i-1,j-1,s1,s2,dp);
+        if(s.charAt(i) == s.charAt(j)){
+            match = 2 + helper(i+1,j-1,s,dp);
         }else{
-            skip = Math.max(helper(i-1,j,s1,s2,dp) , helper(i,j-1,s1,s2,dp));
+            misMatch = Math.max(helper(i+1,j,s,dp),helper(i,j-1,s,dp));
         }
 
-        return dp[i][j] = Math.max(take,skip);
+        return dp[i][j] = Math.max(match,misMatch);
     }
     public int longestPalindromeSubseq(String s) {
 
-        int n = s.length();
-        StringBuilder sb = new StringBuilder(s);
-        String s2 = sb.reverse().toString();
+        int  n = s.length();
+
+        int i = 0;
+        int j = n-1;
 
         int[][]dp = new int[n][n];
-        for(int[]arr : dp)
-        {
+
+        for(int[]arr : dp){
             Arrays.fill(arr,-1);
         }
 
-        return helper(n-1,n-1,s,s2,dp);
+        return helper(i,j,s,dp);
         
     }
 }
