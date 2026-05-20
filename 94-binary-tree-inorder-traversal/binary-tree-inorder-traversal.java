@@ -14,42 +14,28 @@
  * }
  */
 class Solution {
+
+
+    public static void helper(TreeNode root,List<Integer> ans){
+
+        if(root == null){
+            return;
+        }
+
+        helper(root.left,ans);
+        ans.add(root.val);
+        helper(root.right,ans);
+    }
     public List<Integer> inorderTraversal(TreeNode root) {
+
+        if(root == null){
+            return new ArrayList<>();
+        }
+
 
         List<Integer> ans = new ArrayList<>();
 
-        TreeNode curr = root;
-
-        while(curr!=null)
-        {
-            if(curr.left!=null)
-            {
-                TreeNode pred = curr.left;
-                while(pred.right!= null && pred.right != curr)
-                {
-                    pred = pred.right;
-                }
-
-                // linking step
-                if(pred.right == null)
-                {
-                    pred.right = curr;
-                    curr = curr.left;
-                }
-
-                // unlinking step
-                if(pred.right == curr)
-                {
-                    pred.right = null;
-                    ans.add(curr.val);
-                    curr = curr.right;
-                }
-
-            }else{
-                ans.add(curr.val);
-                curr = curr.right;
-            }
-        }
+        helper(root,ans);
 
         return ans;
         
