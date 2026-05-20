@@ -15,49 +15,32 @@
  */
 class Solution {
 
-
-    public void inorderHelper(TreeNode root,int[]kth,int[]ans)
-    {
-        if(root == null)
-        {
+    public static void helper(TreeNode root,int[]kth,int[]ans){
+        if( ans[0] != -1 || root == null){
             return;
         }
 
-        if(ans[0]!=-1)
-        {
-            return;
-        }
-
-
-        inorderHelper(root.left,kth,ans);
-
-        // System.out.print(root.val+" ---> ");
-        
-        // // else{
-            kth[0]--;
-        // // }
-
-        if(kth[0] == 0)
-        {
+        helper(root.left,kth,ans);
+        kth[0]--;
+        if(kth[0] == 0){
             ans[0] = root.val;
-            // return;
+            return;
         }
-        inorderHelper(root.right,kth,ans);
 
-        
+        helper(root.right,kth,ans);
+
     }
     public int kthSmallest(TreeNode root, int k) {
 
 
+        int[]kth = {k};
+        int[]ans = {-1};
 
-
-
-        int[] ans = {-1};
-        int[] kth = {k};
-        inorderHelper(root,kth,ans);
-
+        helper(root,kth,ans);
 
         return ans[0];
+
+
         
     }
 }
