@@ -15,30 +15,27 @@
  */
 class Solution {
 
-    public static boolean helper(TreeNode root1,TreeNode root2)
-    {
-        if(root1 == null && root2 == null)
-        {
+    public static boolean helper(TreeNode leftRoot,TreeNode rightRoot){
+        if(leftRoot == null && rightRoot == null){
             return true;
         }
 
-        if(root1 == null || root2 == null)
-        {
+        if(leftRoot == null || rightRoot == null){
             return false;
         }
 
-        boolean val = root1.val == root2.val;
-        boolean left = helper(root1.left,root2.right);
-        boolean right = helper(root1.right,root2.left);
+        if(leftRoot.val == rightRoot.val){
+            return helper(leftRoot.left,rightRoot.right) && helper(leftRoot.right,rightRoot.left);
+        }
 
-        return val && left && right;
+        return false;
     }
     public boolean isSymmetric(TreeNode root) {
 
-        if(root == null)
-        {
+        if(root == null){
             return true;
         }
+
 
         return helper(root.left,root.right);
         
