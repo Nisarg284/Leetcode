@@ -1,94 +1,65 @@
 class Solution {
 
-    public static void dfsHelper(HashMap<Integer,ArrayList<Integer>> graph,int src,HashSet<Integer> vis)
-    {
-        vis.add(src);
 
-        ArrayList<Integer> destNodes = graph.get(src);
-        if(destNodes == null)
-        {
+    public static void helper(int src,HashMap<Integer,ArrayList<Integer>>graph,boolean[]vis){
+        if(vis[src]){
             return;
         }
 
-        for(int dest : destNodes)
-        {
-            if(!vis.contains(dest))
-            {
-                dfsHelper(graph,dest,vis);
-            }
-        }
-    }
 
-
-    public static void bfsHelper(HashMap<Integer,ArrayList<Integer>> graph,int src,HashSet<Integer> vis)
-    {
-        Queue<Integer> q = new LinkedList<>();
-        q.add(src);
-        vis.add(src);
-
-
-        while(!q.isEmpty())
-        {
-            int size = q.size();
-
-            for(int i = 0;i<size;i++)
-            {
-                int currSrc = q.remove();
-
-                ArrayList<Integer> destNodes = graph.get(currSrc);
-                if(destNodes == null)
-                {
-                    continue;
-                }
-
-                for(int dest : destNodes)
-                {
-                    if(!vis.contains(dest))
-                    {
-                        q.add(dest);
-                        vis.add(dest);
-                    }
-                }
-            }
+        vis[src] = true;
+        ArrayList<Integer> destNodes = graph.get(src);
+        if(destNodes == null || destNodes.size() == 0){
+            return;
         }
 
-    }
 
+        for(int dest : destNodes){
+            helper(dest,graph,vis);
+        }
+    }
     public int findCircleNum(int[][] isConnected) {
+
+
 
         HashMap<Integer,ArrayList<Integer>> graph = new HashMap<>();
 
         int n = isConnected.length;
         int m = isConnected[0].length;
 
-        for(int i = 0;i<n;i++)
-        {
-            int src = i;
-            for(int j = 0;j<m;j++)
-            {
-                int dest = j;
 
-                if(isConnected[src][dest] == 1 && src != dest)
-                {
-                    graph.computeIfAbsent(src,k -> new ArrayList<>()).add(dest);
+        for(int i = 0;i<n;i++){
+
+            graph.put(i,new ArrayList<>());
+            for(int j = 0;j<m;j++){
+                System.out.print(isConnected[i][j]+" ");
+
+                if(i == j){
+                    continue;
                 }
+                
+                if(isConnected[i][j] == 1){
+                    graph.get(i).add(j);
+                }
+
             }
+            System.out.println();
         }
 
-        int count = 0;
-        HashSet<Integer> vis = new HashSet<>();
+        System.out.println(graph);
 
-        for(int i = 0;i<n;i++)
-        {
-            if(!vis.contains(i))
-            {
-                count++;
-                bfsHelper(graph,i,vis);
-                // dfsHelper(graph,i,vis);
+
+        int counter = 0;
+
+        boolean[]vis = new boolean[n];
+
+        for(int i = 0;i<n;i++){
+            if(!vis[i]){
+                counter++;
+                helper(i,graph,vis);
             }
         }
-
-        // System.out.println(graph);
-        return count;
+        return counter;
+        
     }
 }
