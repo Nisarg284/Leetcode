@@ -32,7 +32,6 @@ class Solution {
 
             graph.put(i,new ArrayList<>());
             for(int j = 0;j<m;j++){
-                System.out.print(isConnected[i][j]+" ");
 
                 if(i == j){
                     continue;
@@ -43,10 +42,8 @@ class Solution {
                 }
 
             }
-            System.out.println();
         }
 
-        System.out.println(graph);
 
 
         int counter = 0;
