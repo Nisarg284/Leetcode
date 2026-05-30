@@ -6,11 +6,23 @@ class Solution {
 
         for(int i = 0;i<arr.length;i++){
             if(arr[i] != 0){
+                j = i+1;
+                continue;
+            }
+
+            while(j < arr.length && arr[j] == 0){
+                j++;
+            }
+
+            if(j < arr.length){
                 int temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
                 j++;
+
             }
+
+            
         }
 
 
