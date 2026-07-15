@@ -8,7 +8,6 @@ class Solution {
 
         while(low <= high){
             sum = (long)(Math.pow(low,2) + Math.pow(high,2));
-            System.out.println("Sum ----> "+ sum);
 
             if(sum == c){
                 return true;
