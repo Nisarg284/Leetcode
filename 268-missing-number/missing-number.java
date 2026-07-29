@@ -1,25 +1,22 @@
 class Solution {
     public int missingNumber(int[] nums) {
 
-        HashSet<Integer> hs = new HashSet<>();
 
-        for(int i=0;i<nums.length;i++)
-        {
-            hs.add(nums[i]);
+        // Set<Integer> set = new HashSet<>();
+
+        int n = nums.length;
+
+        int sum = 0;
+
+        for(int i : nums){
+            // set.add(i);
+            sum += i;
         }
 
-        int missing = 0;
+        int totalSum = n * (n+1) / 2;
 
-        for(int i=0;i<=nums.length;i++)
-        {
-            if(!hs.contains(i))
-            {
-                missing = i;
-                break;
-            }
-        }
+        System.out.println("totalSum ---------------> "+totalSum);
 
-        return missing;
-        
+        return totalSum - sum;      
     }
 }
