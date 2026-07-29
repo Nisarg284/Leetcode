@@ -1,45 +1,45 @@
-// class Solution {
-//     public void rotate(int[] nums, int k) {
-
-//         int[]ans = new int[nums.length];
-
-//         int j=0;
-
-        
-
-//         for(int i=nums.length-k;i<nums.length;i++)
-//         {
-//             ans[j] = nums[i];
-//             j++; 
-//         }
-
-//         for(int i=0;i<=k;i++)
-//         {
-//             ans[j] = nums[i];
-//             j++;
-//         }
-
-//         for(int i=0;i<ans.length;i++)
-//         {
-//             nums[i] = ans[i];
-//         }
-        
-//     }
-// }
-
-
 class Solution {
-    public void rotate(int[] nums, int k) {
-        int n = nums.length;
-        k = k % n;
-        int[] rotated = new int[n];
 
-        for (int i = 0; i < n; i++) {
-            rotated[(i + k) % n] = nums[i];
+    public void reverseArray(int[]arr,int start,int end){
+
+        while(start < end){
+
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+
+            start++;
+            end--;
         }
+    }
+    public void rotate(int[] nums, int k) {
 
-        for (int i = 0; i < n; i++) {
-            nums[i] = rotated[i];
-        }        
+
+        int n = nums.length;
+        System.out.println(k%n);
+
+
+        k %= n;
+
+
+        // Reverse entire array
+         int start = 0;
+        int end = n-1;
+
+        reverseArray(nums,start,end);
+
+        // reverse first k elements
+        start = 0;
+        end = k-1;
+        reverseArray(nums,start,end);
+
+        // reverse last k elements
+        start = k;
+        end = n-1;
+
+        reverseArray(nums,start,end);
+
+        
+        
     }
 }
