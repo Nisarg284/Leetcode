@@ -1,26 +1,29 @@
 class Solution {
     public int[] twoSum(int[] nums, int target) {
 
+        int[]ans = {0,0};
+
+        int n = nums.length;
+
         HashMap<Integer,Integer> hm = new HashMap<>();
 
-        int[]ans = new int[2];
+        hm.put(nums[0],0);
 
-        for(int i = 0;i<nums.length;i++)
-        {
-            int searchFor = target - nums[i];
+        for(int i = 1;i<n;i++){
 
-            if(hm.containsKey(searchFor))
-            {
+            int currEle = nums[i];
+
+            if(hm.containsKey(target - currEle)){
+
                 ans[0] = i;
-                ans[1] = hm.get(searchFor);
-                break;
-            }else
-            {
-                hm.put(nums[i],i);
+                ans[1] = hm.get(target-currEle);
+                return ans;
+            }else{
+                hm.put(currEle,i);
             }
         }
 
-        return ans;
+        return new int[2];
         
     }
 }
