@@ -1,63 +1,41 @@
 class Solution {
-    public void merge(int[] nums1, int m, int[] nums2, int n) {
+    public void merge(int[] arr, int m, int[] brr, int n) {
 
-        int[] mergeArr = new int[m+n];
 
-        int i=0;
-        int j=0;
-        int k=0;
-        
+        int i = 0;
+        int j = 0;
+        int k = 0;
 
-        while(i < m && j < n)
-        {
-            
-               if(nums1[i] < nums2[j] )
-               {
-                mergeArr[k] = nums1[i];
-                k++;
+        int []ans = new int[m + n];
+
+        while(i < m && j < n){
+
+
+            if(arr[i] <= brr[j]){
+                ans[k] = arr[i];
                 i++;
-               }
-            else 
-            {
-                mergeArr[k] = nums2[j];
-                k++;
-                j++; 
-            }
-        }
-
-        while( i < m)
-        {
-                mergeArr[k] = nums1[i];
-                k++;
-                i++;
-        }
-
-        while( j < n)
-        {
-                
-                mergeArr[k] = nums2[j];
-                k++;
+            }else{
+                ans[k] = brr[j];
                 j++;
+            }
+            k++;
         }
 
-        System.arraycopy(mergeArr, 0, nums1, 0, m + n);
+        while(i < m){
+            ans[k] = arr[i];
+            i++;
+            k++;
+        }
 
-        // if(j < nums2.length)
-        // {
-        //     for(int a = j;a<nums2.length;a++)
-        //     {
-        //         mergeArr[k] = nums2[a];
-        //         k++;
-                
-        //     }
-        // }
+        while(j < n){
+            ans[k] = brr[j];
+            j++;
+            k++;
+        }
 
-       // int[] ans = new int[li.size()];
-
-        // for(int a=0;a<mergeArr.length;a++)
-        // {
-        //     nums1[a]=mergeArr[a]; 
-        // }
+        for(int l = 0;l<n+m;l++){
+            arr[l] = ans[l];
+        }
         
     }
 }
