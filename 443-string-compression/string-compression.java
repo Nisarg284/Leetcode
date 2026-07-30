@@ -37,7 +37,6 @@ class Solution {
         }
 
 
-        System.out.println("sb -------------> "+sb);
 
         return sb.length();
         
