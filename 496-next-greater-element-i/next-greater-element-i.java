@@ -31,7 +31,7 @@ class Solution {
             i--;
         }
 
-        System.out.println("map --------> "+hm);
+        // System.out.println("map --------> "+hm);
 
         for(int k : subAns){
             System.out.print(k+" ");
