@@ -1,25 +1,39 @@
 class Solution {
 
-    public int helper(int n,int[]memo)
-    {
-        if(n <= 2)
-        {
+    public static int helper(int n, int[]dp){
+        if(n == 1 || n == 2){
             return n;
         }
 
-        if(memo[n] != -1)
-        {
-            return memo[n];
+        if(dp[n-1] != -1){
+            return dp[n-1];
         }
 
-        return memo[n] = helper(n-1,memo) + helper(n-2,memo); 
+        int oneJump = helper(n-1,dp);
+        int twoJump = helper(n-2,dp);
+
+        return dp[n-1] = oneJump + twoJump;
     }
     public int climbStairs(int n) {
 
-        int[] memo = new int[n+1];
+        if(n == 1 || n == 2){
+            return n;
+        }
 
-        Arrays.fill(memo,-1);
+        int[]dp = new int[n];
 
-        return helper(n,memo);
+        Arrays.fill(dp,-1);
+
+        return helper(n,dp);
+
+        // int currSteps = 0;
+
+        // int oneJump = climbStairs(n-1);
+        // int twoJump = climbStairs(n-2);
+
+        // currSteps = oneJump + twoJump;
+
+        // return currSteps;
+        
     }
 }
