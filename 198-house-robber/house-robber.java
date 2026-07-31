@@ -1,41 +1,33 @@
 class Solution {
 
-    public static int helper(int idx,int[]dp,int[] nums)
-    {
-        if(idx < 0)
-        {
+    public static int helper(int house,int n,int[] arr,int[]dp){
+
+        if(house < 0){
             return 0;
         }
 
-        if(dp[idx] != -1)
-        {
-            return dp[idx];
+        if(dp[house] != -1){
+            return dp[house];
         }
 
-        int steal = nums[idx] + helper(idx-2,dp,nums);
-        int skip = helper(idx-1,dp,nums);
+        int stealAmount = 0;
 
-        return dp[idx] = Math.max(steal,skip);
+        int steal = arr[house] + helper(house - 2,n,arr,dp); 
+        int skip =  helper(house - 1,n,arr,dp); 
+
+        stealAmount = Math.max(steal,skip);
+        return dp[house] = stealAmount;
     }
     public int rob(int[] nums) {
 
 
-
         int n = nums.length;
-
-        if(n == 1)
-        {
-            return nums[0];
-        }
+        int house = n-1;
         int[]dp = new int[n];
 
         Arrays.fill(dp,-1);
 
-        dp[0] = nums[0];
-        dp[1] = Math.max(nums[0],nums[1]);
-
-        return helper(n-1,dp,nums);
-
+        return helper(house,n,nums,dp);
         
     }
 }
