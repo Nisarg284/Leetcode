@@ -1,78 +1,47 @@
 class Solution {
-    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
 
-        if(obstacleGrid[0][0] == 1)
-        {
+    public static int helper(int row,int col,int n,int m,int[][]arr,int[][]dp){
+
+        if(row >= n || col >= m || row < 0 || col < 0 || arr[row][col] == 1){
             return 0;
         }
 
-        int n = obstacleGrid.length;
-        int m = obstacleGrid[0].length;
-
-        int dp[][] = new int[n][m];
-
-
-        // int flag = true;
-        for(int i = 0;i<n;i++)
-        {
-            if(obstacleGrid[i][0] != 1 )
-            {
-                dp[i][0] = 1;
-            }else{
-                break;
-            }
+        if(row == n-1 && col == m-1){
+            return 1;
         }
 
-        // flag = true;
-
-        for(int i = 0;i<m;i++)
-        {
-            if(obstacleGrid[0][i] != 1)
-            {
-                dp[0][i] = 1;
-            }else{
-                break;
-            }
+        if(dp[row][col] != 0){
+            return dp[row][col];
         }
 
 
-        // for(int[]arr : dp)
-        // {
-        //     for(int i : arr)
-        //     {
-        //         System.out.print(i+" ");
-        //     }
-        //     System.out.println();
-        // }
+        // up
+        // helper(row - 1,col,n,m,arr,vis,count);
 
-        // System.out.println("-----------------------");
+        // right
+        int right = helper(row,col+1,n,m,arr,dp);
 
-        for(int i = 1;i<n;i++)
-        {
-            for(int j = 1;j<m;j++)
-            {
-                if(obstacleGrid[i][j] == 1)
-                {
-                    continue;
-                }
+        // down
+        int down = helper(row + 1,col,n,m,arr,dp);
 
-                int top = dp[i-1][j];
-                int left = dp[i][j-1];
+        //left
+        // helper(row,col-1,n,m,arr,vis,count);
 
-                dp[i][j] = top + left;
-            }
-        }
+        return dp[row][col] = right + down;
 
-        // for(int[]arr : dp)
-        // {
-        //     for(int i : arr)
-        //     {
-        //         System.out.print(i+" ");
-        //     }
-        //     System.out.println();
-        // }
+    }
+    public int uniquePathsWithObstacles(int[][] arr) {
 
-        return dp[n-1][m-1];
-        
+        int row = 0;
+        int col = 0;
+        int n = arr.length;
+        int m = arr[0].length;
+
+
+        int[][] dp = new int[n][m];
+
+        int[]count = new int[1];
+
+        return helper(row,col,n,m,arr,dp);        
     }
 }
