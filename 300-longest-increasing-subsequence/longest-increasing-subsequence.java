@@ -1,36 +1,35 @@
 class Solution {
 
-    public static int helper(int curr,int prev,int[]arr,int[][]dp){
-        if(curr >= arr.length){
+    public static int helper(int currIdx,int prevIdx,int[]arr,int[][]dp){
+        if(currIdx >= arr.length){
             return 0;
         }
 
-        if( dp[curr][prev+1] != -1){
-            return dp[curr][prev+1];
+        if( dp[currIdx][prevIdx+1] != -1){
+            return dp[currIdx][prevIdx+1];
         }
 
+        int skip = helper(currIdx+1,prevIdx,arr,dp);
         int take = 0;
-        int skip = helper(curr + 1,prev,arr,dp);
-
-        if(prev == -1 || arr[curr] > arr[prev]){
-            take = 1 + helper(curr + 1, curr,arr,dp);
+        if(prevIdx == -1 || arr[prevIdx] < arr[currIdx]){
+            take = 1 + helper(currIdx + 1,currIdx,arr,dp);
         }
 
-        return dp[curr][prev+1] = Math.max(take,skip);
+        return dp[currIdx][prevIdx+1] = Math.max(take,skip);
     }
     public int lengthOfLIS(int[] nums) {
 
-        int n = nums.length;
-        int i = 0;
-        int j = -1;
+        int currIdx = 0;
+        int prevTakenIdx = -1;
 
+        int n = nums.length;
         int[][]dp = new int[n][n+1];
 
-        for(int[]arr: dp){
+        for(int[]arr : dp){
             Arrays.fill(arr,-1);
         }
 
-        return helper(i,j,nums,dp);
+        return helper(currIdx,prevTakenIdx,nums,dp);
         
     }
 }
