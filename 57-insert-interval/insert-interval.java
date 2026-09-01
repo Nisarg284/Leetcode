@@ -2,42 +2,39 @@ class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
 
         int n = intervals.length;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[0] - b[0]);
 
-        ArrayList<int[]> al = new ArrayList<>();
-        // al.add(intervals[0]);
-
-        int i = 0;
-
-        while(i < n && intervals[i][1]  < newInterval[0])
-        {
-            al.add(intervals[i]);
-            i++;
+        pq.add(newInterval);
+        for(int[]arr : intervals){
+            pq.add(arr);
         }
 
-        while(i < n && intervals[i][0] <= newInterval[1])
-        {
-            newInterval[0] = Math.min(newInterval[0],intervals[i][0]);
-            newInterval[1] = Math.max(newInterval[1],intervals[i][1]);
-            i++;
+        List<int[]>al = new ArrayList<>();
+        al.add(pq.remove());
+
+        while(!pq.isEmpty()){
+
+            int[]prev = al.getLast();
+            int[]curr = pq.remove();
+
+            if(prev[1] >= curr[0]){
+
+                if(prev[1] < curr[1]){
+                    prev[1] = curr[1];
+                }
+            }else{
+                al.add(curr);
+            }
         }
 
-        al.add(newInterval);
+        int[][]ans = new int[al.size()][2];
 
-        while( i < n)
-        {
-            al.add(intervals[i]);
-            i++;
+        int idx = 0;
+        for(int[]arr : al){
+            ans[idx++] = arr;
         }
-
-        int[][] ans = new int[al.size()][2];
-
-        for(i = 0;i<al.size();i++)
-        {
-            ans[i][0] = al.get(i)[0];
-            ans[i][1] = al.get(i)[1];
-        }
-        
 
         return ans;
+        
     }
 }
