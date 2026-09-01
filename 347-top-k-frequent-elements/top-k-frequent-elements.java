@@ -1,48 +1,46 @@
 class Solution {
-
-    static class Pair{
+    public class Pair{
         int ele;
-        int count;
+        int freq;
 
-        public Pair(int ele, int count) {
+        public Pair(int ele,int freq){
             this.ele = ele;
-            this.count = count;
+            this.freq = freq;
+        }
+    }
+    public int[] topKFrequent(int[] nums, int k) {
+
+    PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> a.freq - b.freq);
+    HashMap<Integer,Pair> hm = new HashMap<>();
+
+    for(int i : nums){
+
+        if(hm.containsKey(i)){
+            Pair p = hm.get(i);
+            p.freq++;
+            hm.put(i,p);
+        }else{
+            hm.put(i,new Pair(i,1));
         }
     }
 
-    public int[] topKFrequent(int[] nums, int k) {
+    for(int i : hm.keySet()){
 
-        Map<Integer,Integer> hm = new HashMap<>();
+        pq.add(hm.get(i));
 
-        for(int i : nums){
-            hm.put(i,hm.getOrDefault(i,0)+1);
+        if(pq.size() > k){
+            pq.remove();
         }
+    }
 
-        PriorityQueue<Pair> pq = new PriorityQueue<>((Pair p1,Pair p2) -> p1.count - p2.count);
+    int[] ans = new int[k];
+    int idx = 0;
 
-        for(Integer key : hm.keySet()){
-            
-            int ele = key;
-            int count = hm.get(key);
+    while(!pq.isEmpty()){
+        ans[idx++] = pq.remove().ele;
+    }
 
-            Pair p = new Pair(ele,count);
-
-            pq.add(p);
-            if(pq.size() > k){
-                pq.remove();
-            }
-        }
-
-        int[]ans = new int[k];
-
-        for(int i = 0;i<k;i++){
-            Pair p = pq.remove();
-            ans[i] = p.ele;
-        }
-
-        return ans;
-
-
+    return ans;
         
     }
 }
