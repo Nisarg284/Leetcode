@@ -50,7 +50,7 @@ class Solution {
         int ans = 0;
 
         for(int i = 1;i<n;i++){
-            System.out.print(distance[i] + " ");
+            // System.out.print(distance[i] + " ");
             int roundTrip = 2 * distance[i];
 
             int lastSend = ((roundTrip - 1) / patience[i]) * patience[i];
