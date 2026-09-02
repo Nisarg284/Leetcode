@@ -1,52 +1,48 @@
 class Solution {
 
+    public static boolean helper(int idx,int sum,int[]arr,Boolean[][]dp){
 
-    public static boolean helper(int idx,int targetSum,int[]arr,Boolean[][]dp){
-        if(idx < 0){
+        if(idx >= arr.length){
             return false;
         }
-
-        if(targetSum == 0){
+        
+        if(sum == 0){
             return true;
         }
 
-        if(dp[idx][targetSum] != null){
-            return dp[idx][targetSum];
+
+        if(dp[idx][sum] != null){
+            return dp[idx][sum];
         }
 
+        
+
+        boolean skip = helper(idx + 1,sum,arr,dp);
         boolean take = false;
-        boolean skip = false;
 
-        if(targetSum >= arr[idx]){
-            take = helper(idx-1,targetSum - arr[idx],arr,dp);
+        if(sum >= arr[idx]){
+            take = helper(idx + 1,sum - arr[idx],arr,dp);
         }
 
-        skip = helper(idx-1,targetSum,arr,dp);
 
-        return dp[idx][targetSum] = take || skip;
+        return dp[idx][sum] = take || skip;
     }
     public boolean canPartition(int[] nums) {
 
+        int totalSum = 0;
         int n = nums.length;
-        int sum = 0;
 
         for(int i : nums){
-            sum += i;
+            totalSum += i;
         }
 
-        if(sum % 2 != 0){
+        if(totalSum % 2 != 0){
             return false;
         }
 
-        int targetSum = sum / 2;
+        Boolean[][]dp = new Boolean[n][(totalSum / 2) + 1];
 
-        Boolean[][]dp = new Boolean[n][targetSum+1];
-
-        int idx = n-1;
-
-        return helper(idx,targetSum,nums,dp); 
-
-
+        return helper(0,totalSum / 2,nums,dp);
         
     }
 }
