@@ -1,59 +1,45 @@
 class Solution {
 
-    public static int calSum(int[]arr,int n)
-    {
-        int sum = 0;
+    public static boolean valid(int cap,int[]arr,int days){
 
-        for(int i:arr)
-        {
-            sum+=i;
-        }
+        int w = 0;
 
-        return sum;
-    }
 
-    public static boolean isValid(int[]arr,int days,int mid,int n)
-    {
-        int currDays = 1;
-        int sum = 0;
-        for(int i = 0;i<n;i++)
-        {
-            // if(sum == mid)
-            // {
-            //     currDays++;
-            // }
-            if(sum + arr[i] <= mid)
-            {
-                sum += arr[i];
+        for(int weight : arr){
+
+
+            if(w + weight <= cap){
+                w += weight;
             }else{
-                sum = 0;
-                sum+=arr[i];
-                currDays++;
+                days--;
+                w = 0;
+                w += weight;  
             }
         }
 
-        return currDays <= days;
+        return days > 0;
     }
     public int shipWithinDays(int[] weights, int days) {
 
-        int n = weights.length;
-
-        int i = Arrays.stream(weights).max().getAsInt();
-        int j = calSum(weights,n);
-
-        while(i <= j)
-        {
-            int mid = (i + j)/2;
-
-            if(isValid(weights,days,mid,n))
-            {
-                j = mid-1;
-            }else{
-                i = mid+1;
-            }
+        int totalWeight = 0;
+        int minWeight = Integer.MIN_VALUE;
+        for(int i : weights){
+            totalWeight += i;
+            minWeight = Math.max(i,minWeight);
         }
 
-        return i;
-        
+        int i = minWeight;
+        int j = totalWeight;
+
+        while(i <= j){
+            int mid = (i + j) / 2;
+
+            if(valid(mid,weights,days)){
+                j = mid - 1;
+            }else{
+                i = mid + 1;
+            }
+        }
+        return i;        
     }
 }
