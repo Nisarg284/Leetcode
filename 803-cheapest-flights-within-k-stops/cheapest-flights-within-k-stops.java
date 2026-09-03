@@ -1,49 +1,47 @@
 class Solution {
-    public int findCheapestPrice(int n, int[][] flights, int source, int dst, int k) {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
 
+        HashMap<Integer,List<int[]>> graph = new HashMap<>();
 
-        HashMap<Integer,List<int[]>> hm = new HashMap<>();
-
-        for(int[] flight : flights)
-        {
-            int src = flight[0];
+        for(int[] flight : flights){
+            int currSrc = flight[0];
             int dest = flight[1];
             int cost = flight[2];
-            hm.computeIfAbsent(src, key -> new ArrayList<>()).add(new int[]{dest,cost});
+
+            graph.computeIfAbsent(currSrc,j -> new ArrayList<>()).add(new int[]{dest,cost});
         }
 
-        int[] dist = new int[n];
-        Arrays.fill(dist,Integer.MAX_VALUE);
-
-        k = k+1;
-        dist[source] = 0;
+        k+=1;
         PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> b[2] - a[2]);
-        pq.add(new int[]{source,0,k});
 
-        while(!pq.isEmpty())
-        {
-            int[] curr = pq.remove();
-            int src = curr[0];
-            int cost = curr[1];
-            int leftK = curr[2];
+        int[]dist = new int[n];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        dist[src] = 0;
 
-            List<int[]> destData = hm.get(src);
-            if(destData == null)
-            {
+        pq.add(new int[]{src,0,k});
+
+        while(!pq.isEmpty()){
+
+            int[]srcNode = pq.remove();
+            int currSrc = srcNode[0];
+            int currCost = srcNode[1];
+            int leftK = srcNode[2];
+
+
+            List<int[]> destNode = graph.get(currSrc);
+            if(destNode == null){
                 continue;
             }
 
-            for(int[] destNodes : destData)
-            {
-                int dest = destNodes[0];
-                int destCost = destNodes[1];
-                int newK = leftK - 1;
-                int newCost = cost + destCost;
+            for(int[]dest : destNode){
+                int currDest = dest[0];
+                int destCost = dest[1];
+                int newLeftK = leftK - 1;
+                int newCost =  currCost + destCost;
 
-                if(newK >= 0 && newCost < dist[dest])
-                {
-                    pq.add(new int[]{dest,newCost,newK});
-                    dist[dest] = newCost;
+                if(newLeftK >= 0 && newCost < dist[currDest]){
+                    pq.add(new int[]{currDest,newCost,newLeftK});
+                    dist[currDest] = newCost;
                 }
             }
         }
