@@ -1,75 +1,69 @@
 class Solution {
     public int minCostConnectPoints(int[][] points) {
+
         int n = points.length;
-       
-       HashMap<Character,List<Pair>> graph = new HashMap<>();
 
-       for(int i = 0;i<n-1;i++)
-       {
-            int x1 = points[i][0];
-            int y1 = points[i][1];
-            char src = (char) ('a'+i);
-            for(int j = i+1;j<n;j++)
-            {
-                int x2 = points[j][0];
-                int y2 = points[j][1];
+        HashMap<Integer,List<int[]>> graph = new HashMap<>();
 
-                char dest = (char) ('a'+j);
+        for(int i = 0;i<n;i++){
+
+            int src[] = points[i]; 
+            int x1 = src[0];
+            int y1 = src[1];
+            int srcNode = i;
+            for(int j = i+1;j<n;j++){
+
+                int[]dest = points[j];
+                int x2 = dest[0];
+                int y2 = dest[1];
+                int destNode = j;
+
                 int cost = Math.abs(x1 - x2) + Math.abs(y1 - y2);
-
-                // System.out.println(STR."\{src} ----- \{dest} , cost : \{cost}");
-                graph.computeIfAbsent(src,key -> new ArrayList<>()).add(new Pair(dest,cost));
-                graph.computeIfAbsent(dest,key -> new ArrayList<>()).add(new Pair(src,cost));
-
+                graph.computeIfAbsent(srcNode,key -> new ArrayList<>()).add(new int[]{destNode,cost});
+                graph.computeIfAbsent(destNode,key -> new ArrayList<>()).add(new int[]{srcNode,cost});
             }
-       }
+        }
 
-       PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> a.cost - b.cost);
-       pq.add(new Pair('a',0));
+            PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1] - b[1]);
+            pq.add(new int[]{0,0});
+            int totalCost = 0;
 
-       int totalCost = 0;
-       Set<Character> vis = new HashSet<>();
+            boolean[] vis = new boolean[n];
+            int edgeCount = 0;
 
-        int edgeCount = 0;
-       while(!pq.isEmpty() && edgeCount < n)
-       {
-            Pair srcData = pq.remove();
-            char src = srcData.src;
-            int cost = srcData.cost;
-
-            if(vis.contains(src))
+            while(!pq.isEmpty() && edgeCount < n)
             {
-                continue;
-            }
-            totalCost += cost;
-            vis.add(src);
-            edgeCount++;
 
-            if(graph.containsKey(src))
-            {
-                for(Pair destNode : graph.get(src))
-                {
-                    char dest = destNode.src;
-                    if(!vis.contains(dest))
-                    {
+                int[] srcData = pq.remove();
+                int src = srcData[0];
+                int cost = srcData[1];
+
+                if(vis[src]){
+                    continue;
+                }
+
+                vis[src] = true;
+                totalCost += cost;
+                edgeCount++;
+
+                List<int[]> destNodes = graph.get(src);
+                if(destNodes == null){
+                    continue;
+                }
+
+                for(int[] destNode : destNodes){
+                    int dest = destNode[0];
+                    int destCost = destNode[1];
+                    if(!vis[dest]){
                         pq.add(destNode);
                     }
-                }
+                }   
             }
-       }
 
-       return totalCost;
-        
+            return totalCost;
+        }             
     }
-}
 
-class Pair{
-    char src;
-    int cost;
 
-    public Pair(char src,int cost)
-    {
-        this.src = src;
-        this.cost = cost;
-    }
-}
+
+
