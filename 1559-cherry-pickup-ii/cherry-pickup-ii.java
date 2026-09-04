@@ -1,64 +1,49 @@
 class Solution {
 
-    public static int helper(int row,int rob1,int rob2,int[][]grid,int n,int m,int[][][] dp)
-    {
-        if(rob1 < 0 || rob1 >= m || rob2 < 0 || rob2 >= m)
-        {
+    public static int helper(int i,int j,int k,int[][]grid,int n,int m,Integer[][][]dp){
+
+        if(i >= n || j < 0 || j >= m || k < 0 || k >= m){
             return Integer.MIN_VALUE;
-            // return 0;
         }
 
-        if(row == n-1)
-        {
-            if(rob1 == rob2)
-            {
-                return grid[row][rob1];
-            }else{
-                return grid[row][rob1] + grid[row][rob2];
+        if(dp[i][j][k] != null){
+            return dp[i][j][k];
+        }
+
+        if(i == n-1){
+            if(j == k){
+                return grid[i][j];
             }
+            return grid[i][j] + grid[i][k];
         }
 
-        if(dp[row][rob1][rob2] != Integer.MIN_VALUE)
-        {
-            return dp[row][rob1][rob2];
-        }
+        int totalCherries = Integer.MIN_VALUE;
 
-        int currMax = Integer.MIN_VALUE;
-
-        for(int i = -1;i<=1;i++)
-        {
-            for(int j = -1;j<=1;j++)
-            {
-                int currCherries = 0;
-                if(rob1 == rob2)
-                {
-                    currCherries = grid[row][rob1];
+        for(int col1 = -1;col1 <=1;col1++){
+            for(int col2 = -1;col2 <= 1;col2++){
+                int curr = 0;
+                if(j == k){
+                    curr = grid[i][j];
                 }else{
-                    currCherries = grid[row][rob1] + grid[row][rob2];
+                    curr = grid[i][j] + grid[i][k];
                 }
-
-                currMax = Math.max(currMax, currCherries + helper(row+1,rob1 + i,rob2 + j,grid,n,m,dp));
+                totalCherries = Math.max(totalCherries , curr + helper(i+1,j + col1,k + col2,grid,n,m,dp));
             }
         }
-
-        return dp[row][rob1][rob2] = currMax;
+        
+        return dp[i][j][k] = totalCherries;
     }
     public int cherryPickup(int[][] grid) {
 
         int n = grid.length;
         int m = grid[0].length;
+        int i = 0;
+        int j = 0;
+        int k = m - 1;
 
-        int[][][] dp = new int[n][m][m];
+        Integer[][][]dp = new Integer[n][m][m];
 
-        for(int[][]mat : dp)
-        {
-            for(int[]arr : mat)
-            {
-                Arrays.fill(arr,Integer.MIN_VALUE);
-            }
-        }
-
-        return helper(0,0,m-1,grid,n,m,dp);
+        return helper(i,j,k,grid,n,m,dp);
         
     }
 }
