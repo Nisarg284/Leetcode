@@ -1,53 +1,41 @@
 class Solution {
 
-    public static int helper(int idx,int status,int k,int n, int[]prices,int[][][]dp)
-    {
-        if(idx == n || k < 0)
-        {
-            System.out.println(k);
+    public static int helper(int idx,int status,int k,int[]prices,int n,Integer[][][]dp){
+        if(idx >= n || k < 0){
             return 0;
         }
 
-        if(dp[idx][status][k] != -1)
-        {
-            return dp[idx][status][k];
+        if(dp[idx][k][status] != null){
+            return dp[idx][k][status];
         }
 
 
         int profit = 0;
-
-        if(status == 1)
-        {
-            int buy = -prices[idx] + helper(idx+1,0,k-1,n,prices,dp);
-            int notBuy =  helper(idx+1,1,k,n,prices,dp);
-
+        if(status == 1){
+            int buy = -prices[idx] + helper(idx + 1,0,k-1,prices,n,dp);
+            int notBuy = helper(idx + 1,status,k,prices,n,dp);
             profit = Math.max(buy,notBuy);
         }else{
-            int sell = prices[idx] + helper(idx+1,1,k-1,n,prices,dp);
-            int notSell = helper(idx+1,0,k,n,prices,dp);
-
+            int sell = prices[idx] + helper(idx + 1,1,k,prices,n,dp);
+            int notSell = helper(idx + 1,status,k,prices,n,dp);
             profit = Math.max(sell,notSell);
+
         }
 
-        return dp[idx][status][k] = profit;
+        return dp[idx][k][status] = profit;
     }
     public int maxProfit(int k, int[] prices) {
 
-        int n = prices.length;
 
-        int idx = 0;
+        int n = prices.length;
         int status = 1;
 
-        int[][][]dp = new int[n][2][k*2];
+        Integer[][][]dp = new Integer[n][k+1][status + 1];
 
-        for(int[][]arr : dp)
-        {
-            for(int[]a : arr)
-            {
-                Arrays.fill(a,-1);
-            }
-        }
-        return helper(idx,status,(k*2)-1,n,prices,dp);
+
+        int idx = 0;
+
+        return helper(idx,status,k,prices,n,dp);
         
     }
 }
