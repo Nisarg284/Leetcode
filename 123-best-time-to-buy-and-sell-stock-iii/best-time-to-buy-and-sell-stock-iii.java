@@ -1,52 +1,39 @@
 class Solution {
 
-    public static int helper(int idx,int status,int transections,int n,int[]prices,int[][][]dp)
-    {
-        if(idx == n || transections < 0)
-        {
+    public static int helper(int idx,int status,int transactions,int n,int[]arr,Integer[][][]dp){
+
+        if(idx >= n){
             return 0;
         }
 
-        if(dp[idx][status][transections] != -1)
-        {
-            return dp[idx][status][transections];
+        if(dp[idx][status][transactions] != null){
+            return dp[idx][status][transactions];
         }
 
-        int profit = 0;
+        int skip = helper(idx + 1,status,transactions,n,arr,dp);
+        int buy = Integer.MIN_VALUE;
+        int sell = Integer.MIN_VALUE;
 
-        if(status == 1)
-        {
-            int buy = -prices[idx] + helper(idx+1,0,transections,n,prices,dp);
-            int notBuy = helper(idx+1,1,transections,n,prices,dp);
-            profit = Math.max(buy,notBuy);
+        if(status == 0){
+            if(transactions > 0){
+                buy = -arr[idx] + helper(idx + 1,1,transactions - 1,n,arr,dp);
+            }
         }else{
-            int sell = prices[idx] + helper(idx+1,1,transections-1,n,prices,dp);
-            int notSell = helper(idx+1,0,transections,n,prices,dp);
-
-            profit = Math.max(sell,notSell);
+            sell = arr[idx] + helper(idx + 1,0,transactions,n,arr,dp);
         }
 
-        return dp[idx][status][transections] = profit;
+        return dp[idx][status][transactions] = Math.max(skip,Math.max(buy,sell));
     }
     public int maxProfit(int[] prices) {
 
+        int idx = 0;
+        int status = 0;
+        int transactions = 2;
         int n = prices.length;
 
-        int idx = 0;
-        int status = 1;
-        int transections = 1;
+        Integer[][][]dp = new Integer[n][2][3];
 
-        int[][][]dp = new int[n][2][2];
-
-        for(int[][]a : dp)
-        {
-            for(int[]b : a)
-            {
-                Arrays.fill(b,-1);
-            }
-        }
-
-        return helper(idx,status,transections,n,prices,dp);
+        return helper(idx,status,transactions,n,prices,dp);
         
     }
 }
