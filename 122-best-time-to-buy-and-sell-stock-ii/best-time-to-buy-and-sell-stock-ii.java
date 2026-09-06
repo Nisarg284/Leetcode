@@ -1,47 +1,37 @@
 class Solution {
 
-    public static int helper(int idx,int flag,int[]prices,int n,int[][]dp)
-    {
-        if(idx == n)
-        {
+    public static int helper(int idx,int status,int[]arr,int n,Integer[][]dp){
+        if(idx >= n){
             return 0;
         }
 
-
-        if(dp[idx][flag] != -1)
-        {
-            return dp[idx][flag];
+        if(dp[idx][status] != null){
+            return dp[idx][status];
         }
 
-
-
-        int profit = 0;
-
-        if(flag == 1)
-        {
-            int buy = -prices[idx] + helper(idx+1,0,prices,n,dp);
-            int notBuy = 0 + helper(idx+1,1,prices,n,dp);
-            profit = Math.max(buy,notBuy);
+        int skip = helper(idx+1,status,arr,n,dp);
+        int buy = Integer.MIN_VALUE;
+        int sell = Integer.MIN_VALUE;
+        if(status == 0){
+            buy = -arr[idx] + helper(idx + 1,1,arr,n,dp);
         }else{
-            int sell = prices[idx] + helper(idx+1,1,prices,n,dp);
-            int notSell = helper(idx+1,0,prices,n,dp);
-            profit = Math.max(sell,notSell);
+            sell = arr[idx] + helper(idx + 1,0,arr,n,dp);
         }
 
-        return dp[idx][flag] = profit;
+        int profit = Math.max(skip,Math.max(buy,sell));
+
+        return dp[idx][status] = profit;
     }
     public int maxProfit(int[] prices) {
 
         int n = prices.length;
+        Integer[][]dp = new Integer[n][2];
 
-        int[][]dp = new int[n][2];
+        int idx = 0;
 
-        for(int arr[] : dp)
-        {
-            Arrays.fill(arr,-1);
-        }
+        int status = 0;
 
-        return helper(0,1,prices,n,dp);
+        return helper(idx,status,prices,n,dp);
         
     }
 }
