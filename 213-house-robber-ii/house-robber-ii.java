@@ -1,45 +1,35 @@
 class Solution {
 
-
-    public int helper(int idx,int stopIdx,int[]nums,int[]dp)
-    {
-        if(idx < stopIdx)
-        {
+    public static int helper(int idx,int[]nums,int n,Integer[]dp){
+        if(idx >= n){
             return 0;
         }
 
-
-        if(dp[idx] != -1)
-        {
+        if(dp[idx] != null){
             return dp[idx];
         }
 
+        int rob = nums[idx] + helper(idx + 2,nums,n,dp);
+        int skip = helper(idx + 1,nums,n,dp);
 
-        int take = nums[idx] + helper(idx-2,stopIdx,nums,dp);
-        int skip = helper(idx-1,stopIdx,nums,dp);
-
-
-        return dp[idx] = Math.max(take,skip);
+        return dp[idx] = Math.max(rob,skip);
     }
     public int rob(int[] nums) {
 
         int n = nums.length;
 
-        if(n==1){
+        if(n == 1){
             return nums[0];
         }
 
+        Integer[]dp = new Integer[n];
 
-        int[] dp = new int[n];
+        int firstAns = helper(0,nums,n-1,dp);
 
-        Arrays.fill(dp,-1);
-        int last = helper(n-1,1,nums,dp);
+        Arrays.fill(dp,null);
+        int secondAns = helper(1,nums,n,dp);
 
-        Arrays.fill(dp,-1);
-        int secLast = helper(n-2,0,nums,dp);
-
-
-        return Math.max(last,secLast);
+        return Math.max(firstAns,secondAns);
         
     }
 }
