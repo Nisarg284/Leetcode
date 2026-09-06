@@ -1,68 +1,34 @@
 class Solution {
 
-    public static int helper(int idx,int status,int fee,int n,int[]prices,int[][]dp)
-    {
-        if(idx == n)
-        {
+    public static int helper(int idx,int status,int fee,int[]arr,Integer[][] dp){
+        if(idx >= arr.length){
             return 0;
         }
 
-        if(dp[idx][status] != -1)
-        {
+        if(dp[idx][status] != null){
             return dp[idx][status];
         }
 
-        int profit = 0;
-        if(status == 1)
-        {
-            int buy = -prices[idx] + helper(idx+1,0,fee,n,prices,dp);
-            int notBuy =  helper(idx+1,1,fee,n,prices,dp);
-
-            profit = Math.max(buy,notBuy);
+        int skip = helper(idx + 1,status,fee,arr,dp);
+        int buy = Integer.MIN_VALUE;
+        int sell = Integer.MIN_VALUE;
+        if(status == 0){
+            buy = -(arr[idx] + fee) + helper(idx + 1,1,fee,arr,dp);
         }else{
-            int sell = prices[idx] + helper(idx+1,1,fee,n,prices,dp);
-            int notSell = helper(idx+1,0,fee,n,prices,dp);
-
-            profit = Math.max(sell - fee,notSell);
+            sell = arr[idx] + helper(idx + 1,0,fee,arr,dp);
         }
 
-        return dp[idx][status] = profit;
+        return dp[idx][status] = Math.max(skip,Math.max(buy,sell));
     }
     public int maxProfit(int[] prices, int fee) {
 
         int n = prices.length;
-
         int idx = 0;
-        int status = 1;
-
-        int[][]dp = new int[n][2];
-
-        for(int[]arr : dp)
-        {
-            Arrays.fill(arr,-1);
-        }
-
-        return helper(idx,status,fee,n,prices,dp);
-
-        // int profit = 0;
-
-        // int buy = 0;
-        // int sell = 1;
+        int status = 0;
+        Integer[][] dp = new Integer[n][2];
 
 
-        // while(sell < n)
-        // {
-        //     if(prices[sell] >= (prices[buy] + fee))
-        //     {
-        //         profit += (prices[sell] - (prices[buy] + fee));
-        //     }else{
-        //         buy = sell;
-        //     }
-        //     System.out.println(profit);
-        //     sell++;
-        // }
-
-        // return profit;
+        return helper(idx,status,fee,prices,dp);
         
     }
 }
